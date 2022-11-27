@@ -1,19 +1,39 @@
 {
-  "name": "ui",
-  "version": "0.0.0",
-  "main": "./index.tsx",
-  "types": "./index.tsx",
-  "license": "MIT",
-  "scripts": {
-    "lint": "eslint *.ts*"
-  },
-  "devDependencies": {
-    "@types/react": "^18.0.17",
-    "@types/react-dom": "^18.0.6",
-    "eslint": "^7.32.0",
-    "eslint-config-custom": "workspace:*",
-    "react": "^18.2.0",
-    "tsconfig": "workspace:*",
-    "typescript": "^4.5.2"
-  }
+    "name": "@smart-console/react",
+    "version": "0.0.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "dist"
+    ],
+    "main": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.js"
+        }
+    },
+    "license": "MIT",
+    "scripts": {
+        "lint": "eslint *.ts*",
+        "build": "tsup index.ts --dts --format esm,cjs",
+        "dev": "npm run build -- --watch"
+    },
+    "devDependencies": {
+        "@types/react": "^18.0.17",
+        "@types/react-dom": "^18.0.6",
+        "eslint": "^7.32.0",
+        "eslint-config-custom": "workspace:*",
+        "react": "^18.2.0",
+        "tsconfig": "workspace:*",
+        "tsup": "^6.5.0",
+        "typescript": "^4.5.2"
+    },
+    "peerDependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "bundleDependencies": true
 }

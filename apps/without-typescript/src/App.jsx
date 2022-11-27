@@ -1,10 +1,11 @@
 import { SmartConsoleDevtool } from '@smart-console/react';
 
-export default function Web() {
+function App() {
     return (
-        <div>
-            <h1>Web</h1>
+        <div className='App'>
             <SmartConsoleDevtool />
         </div>
     );
 }
+
+export default App;
