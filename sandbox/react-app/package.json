@@ -9,14 +9,16 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@smart-console/react": "workspace:*",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "@smart-console/react": "workspace:*"
+        "react-dom": "^18.2.0"
     },
     "devDependencies": {
+        "eslint-config-custom": "workspace:*",
         "@types/react": "^18.0.24",
         "@types/react-dom": "^18.0.8",
         "@vitejs/plugin-react": "^2.2.0",
+        "eslint": "^8.28.0",
         "vite": "^3.2.3"
     }
 }

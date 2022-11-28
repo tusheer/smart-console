@@ -1,0 +1,8 @@
+{
+    "extends": ["eslint-config-custom"],
+    "settings": {
+        "next": {
+            "rootDir": "sandbox/react-app/"
+        }
+    }
+}

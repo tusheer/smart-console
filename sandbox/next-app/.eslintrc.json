@@ -1,0 +1,8 @@
+{
+    "extends": ["eslint-config-custom", "next/core-web-vitals", "next"],
+    "settings": {
+        "next": {
+            "rootDir": "sandbox/next-app/"
+        }
+    }
+}

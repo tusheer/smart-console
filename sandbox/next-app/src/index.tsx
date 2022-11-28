@@ -1,10 +1,8 @@
-import React from 'react';
-
+import React, { useState, useCallback } from 'react';
 const Hi = () => {
+    const [state, setState] = useState();
+
     console.log('hello');
-
-    const state = 'asdf';
-
     return <div>Hi</div>;
 };
 
