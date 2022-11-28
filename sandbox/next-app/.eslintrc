@@ -1,0 +1,14 @@
+{
+    "rules": {
+        // enable additional rules
+        "indent": ["error", 4],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"],
+        "no-unused-vars": "off",
+        // override configuration set by extending "eslint:recommended"
+        "no-empty": "warn",
+        "no-cond-assign": ["error", "always"],
+        "no-console": "warn"
+    }
+}

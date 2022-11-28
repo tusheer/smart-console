@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "private": true,
     "workspaces": [
-        "apps/*",
+        "sandbox/*",
         "shared/*",
         "package/*"
     ],
@@ -22,5 +22,5 @@
     "engines": {
         "node": ">=14.0.0"
     },
-    "packageManager": "pnpm@7.17.0"
+    "packageManager": "pnpm@7.17.1"
 }
