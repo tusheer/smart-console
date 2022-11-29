@@ -15,7 +15,7 @@
         "@smart-console/react": "workspace:*"
     },
     "devDependencies": {
-        "eslint-config-custom": "workspace:*",
+        "eslint-config-custom-next": "workspace:*",
         "eslint": "7.32.0",
         "tsconfig": "workspace:*",
         "@types/node": "^17.0.12",

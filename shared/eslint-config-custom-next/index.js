@@ -1,4 +1,4 @@
-module.exports = {
+module.exports =  {
     plugins: ["@typescript-eslint"],
     extends: ['turbo', 'prettier', "eslint:recommended"],
     rules: {

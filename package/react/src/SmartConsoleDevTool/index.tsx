@@ -1,7 +1,7 @@
 const SmartConsoleDevToop = () => {
-  return (
-    <div>SmartConsoleDevToop</div>
-  )
-}
+    console.log('ji');
 
-export default SmartConsoleDevToop
+    return <div>SmartConsoleDevToop</div>;
+};
+
+export default SmartConsoleDevToop;
