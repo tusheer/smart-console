@@ -1,9 +1,5 @@
-import { useState } from 'react';
-
-const SmartConsoleDevTool = () => {
-    console.log('ji');
-    const [state, setState] = useState();
+const SmartConsoleDevTools = () => {
     return <div>SmartConsoleDevToop</div>;
 };
 
-export default SmartConsoleDevTool;
+export default SmartConsoleDevTools;
