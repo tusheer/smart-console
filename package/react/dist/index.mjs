@@ -16,7 +16,7 @@ var __spreadValues = (a, b) => {
 };
 
 // src/SmartConsoleDevTool/index.tsx
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 
 // src/store/index.ts
 var initialStore = {
@@ -41,12 +41,18 @@ var store = createStore(initialStore);
 // src/SmartConsoleDevTool/index.tsx
 import { jsx } from "react/jsx-runtime";
 var SmartConsoleDevTools = () => {
+  const [isSsr, setIsSsr] = useState(true);
   const state = useSyncExternalStore(
     store.subscribe,
-    useCallback(() => store.getState(), [])
+    useCallback(() => store.getState(), []),
+    () => store.getState()
   );
+  useEffect(() => {
+    setIsSsr(false);
+  }, []);
+  const logs = isSsr ? [] : state.consoles;
   return /* @__PURE__ */ jsx("ul", {
-    children: state.consoles.map((value, index) => {
+    children: logs.map((value, index) => {
       return /* @__PURE__ */ jsx("li", {
         children: value
       }, index);

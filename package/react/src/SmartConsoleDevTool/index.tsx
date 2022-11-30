@@ -1,15 +1,23 @@
-import { useCallback, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { store } from '../store';
 
 const SmartConsoleDevTools = () => {
+    const [isSsr, setIsSsr] = useState(true);
     const state = useSyncExternalStore(
         store.subscribe,
-        useCallback(() => store.getState(), [])
+        useCallback(() => store.getState(), []),
+        () => store.getState()
     );
+
+    useEffect(() => {
+        setIsSsr(false);
+    }, []);
+
+    const logs = isSsr ? [] : state.consoles;
 
     return (
         <ul>
-            {state.consoles.map((value, index) => {
+            {logs.map((value, index) => {
                 return <li key={index}>{value}</li>;
             })}
         </ul>

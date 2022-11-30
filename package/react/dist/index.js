@@ -65,12 +65,18 @@ var store = createStore(initialStore);
 // src/SmartConsoleDevTool/index.tsx
 var import_jsx_runtime = require("react/jsx-runtime");
 var SmartConsoleDevTools = () => {
+  const [isSsr, setIsSsr] = (0, import_react.useState)(true);
   const state = (0, import_react.useSyncExternalStore)(
     store.subscribe,
-    (0, import_react.useCallback)(() => store.getState(), [])
+    (0, import_react.useCallback)(() => store.getState(), []),
+    () => store.getState()
   );
+  (0, import_react.useEffect)(() => {
+    setIsSsr(false);
+  }, []);
+  const logs = isSsr ? [] : state.consoles;
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-    children: state.consoles.map((value, index) => {
+    children: logs.map((value, index) => {
       return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
         children: value
       }, index);
