@@ -1,10 +1,11 @@
-import console, { SmartConsoleDevtool } from '@smart-console/react';
+import Console, { SmartConsoleDevtool } from '@smart-console/react';
 import React from 'react';
 
 const App = () => {
+    Console.log('hi');
     return (
         <div>
-            <h1 onClick={() => console.errorr('test')}>Web</h1>
+            <h1 onClick={() => Console.log('test')}>Web</h1>
             <SmartConsoleDevtool />
         </div>
     );
