@@ -3,20 +3,27 @@ import { useStore } from '../store';
 
 const SmartConsoleDevTools = () => {
     const [isSsr, setIsSsr] = useState(true);
-    const state = useStore((sate) => sate.consoles);
+    const logs = useStore((sate) => sate.logs);
 
     useEffect(() => {
         setIsSsr(false);
     }, []);
 
-    const logs = isSsr ? [] : state;
+    if (isSsr) return null;
 
     return (
-        <ul>
+        <div
+            style={{
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                background: 'red',
+            }}>
             {logs.map((value, index) => {
                 return <li key={index}>{value}</li>;
             })}
-        </ul>
+        </div>
     );
 };
 

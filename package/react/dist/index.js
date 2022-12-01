@@ -40,11 +40,12 @@ __export(react_exports, {
 module.exports = __toCommonJS(react_exports);
 
 // src/SmartConsoleDevTool/index.tsx
-var import_react = require("react");
+var import_react2 = require("react");
 
 // src/store/index.ts
+var import_react = require("react");
 var initialStore = {
-  consoles: []
+  logs: []
 };
 var createStore = (initialStore2) => {
   let state = initialStore2;
@@ -61,27 +62,39 @@ var createStore = (initialStore2) => {
   return { getState, setState, subscribe };
 };
 var store = createStore(initialStore);
+var useStore = (callback) => {
+  return (0, import_react.useSyncExternalStore)(
+    store.subscribe,
+    (0, import_react.useCallback)(() => callback(store.getState()), []),
+    () => callback(initialStore)
+  );
+};
 
 // src/SmartConsoleDevTool/index.tsx
 var import_jsx_runtime = require("react/jsx-runtime");
 var SmartConsoleDevTools = () => {
-  const [isSsr, setIsSsr] = (0, import_react.useState)(true);
-  const state = (0, import_react.useSyncExternalStore)(
-    store.subscribe,
-    (0, import_react.useCallback)(() => store.getState(), []),
-    () => store.getState()
-  );
-  (0, import_react.useEffect)(() => {
+  const [isSsr, setIsSsr] = (0, import_react2.useState)(true);
+  const logs = useStore((sate) => sate.logs);
+  (0, import_react2.useEffect)(() => {
     setIsSsr(false);
   }, []);
-  const logs = isSsr ? [] : state.consoles;
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-    children: logs.map((value, index) => {
-      return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-        children: value
-      }, index);
-    })
-  });
+  if (isSsr)
+    return null;
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+    "div",
+    {
+      style: {
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        background: "red"
+      },
+      children: logs.map((value, index) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: value }, index);
+      })
+    }
+  );
 };
 var SmartConsoleDevTool_default = SmartConsoleDevTools;
 
@@ -90,14 +103,14 @@ var console = {};
 var log = (log2) => {
   store.setState((value) => {
     return {
-      consoles: [...value.consoles, log2]
+      logs: [...value.logs, log2]
     };
   });
 };
 var errorr = (log2) => {
   store.setState((value) => {
     return {
-      consoles: [...value.consoles, log2]
+      logs: [...value.logs, log2]
     };
   });
 };

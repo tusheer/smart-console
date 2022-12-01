@@ -1,7 +1,14 @@
 import React from 'react';
+import styled from './style-component';
+
+const Div = styled('div', {}, {});
 
 const SmartConsoleProvider = () => {
-    return <div>SmartConsoleContext</div>;
+    return (
+        <Div>
+            <div>Tusher</div>
+        </Div>
+    );
 };
 
 export default SmartConsoleProvider;

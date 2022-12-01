@@ -1,4 +1,4 @@
-declare const SmartConsoleDevTools: () => JSX.Element;
+declare const SmartConsoleDevTools: () => JSX.Element | null;
 
 declare const _default: {
     log: (log: string) => void;

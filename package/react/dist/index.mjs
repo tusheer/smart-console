@@ -16,11 +16,12 @@ var __spreadValues = (a, b) => {
 };
 
 // src/SmartConsoleDevTool/index.tsx
-import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 
 // src/store/index.ts
+import { useCallback, useSyncExternalStore } from "react";
 var initialStore = {
-  consoles: []
+  logs: []
 };
 var createStore = (initialStore2) => {
   let state = initialStore2;
@@ -37,27 +38,39 @@ var createStore = (initialStore2) => {
   return { getState, setState, subscribe };
 };
 var store = createStore(initialStore);
+var useStore = (callback) => {
+  return useSyncExternalStore(
+    store.subscribe,
+    useCallback(() => callback(store.getState()), []),
+    () => callback(initialStore)
+  );
+};
 
 // src/SmartConsoleDevTool/index.tsx
 import { jsx } from "react/jsx-runtime";
 var SmartConsoleDevTools = () => {
   const [isSsr, setIsSsr] = useState(true);
-  const state = useSyncExternalStore(
-    store.subscribe,
-    useCallback(() => store.getState(), []),
-    () => store.getState()
-  );
+  const logs = useStore((sate) => sate.logs);
   useEffect(() => {
     setIsSsr(false);
   }, []);
-  const logs = isSsr ? [] : state.consoles;
-  return /* @__PURE__ */ jsx("ul", {
-    children: logs.map((value, index) => {
-      return /* @__PURE__ */ jsx("li", {
-        children: value
-      }, index);
-    })
-  });
+  if (isSsr)
+    return null;
+  return /* @__PURE__ */ jsx(
+    "div",
+    {
+      style: {
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        background: "red"
+      },
+      children: logs.map((value, index) => {
+        return /* @__PURE__ */ jsx("li", { children: value }, index);
+      })
+    }
+  );
 };
 var SmartConsoleDevTool_default = SmartConsoleDevTools;
 
@@ -66,14 +79,14 @@ var console = {};
 var log = (log2) => {
   store.setState((value) => {
     return {
-      consoles: [...value.consoles, log2]
+      logs: [...value.logs, log2]
     };
   });
 };
 var errorr = (log2) => {
   store.setState((value) => {
     return {
-      consoles: [...value.consoles, log2]
+      logs: [...value.logs, log2]
     };
   });
 };

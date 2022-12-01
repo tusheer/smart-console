@@ -5,14 +5,14 @@ const console = {};
 const log = (log: string) => {
     store.setState((value) => {
         return {
-            consoles: [...value.consoles, log],
+            logs: [...value.logs, log],
         };
     });
 };
 const errorr = (log: string) => {
     store.setState((value) => {
         return {
-            consoles: [...value.consoles, log],
+            logs: [...value.logs, log],
         };
     });
 };

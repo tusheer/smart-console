@@ -1,14 +1,15 @@
 import { useCallback, useSyncExternalStore } from 'react';
 
-export const initialStore: {
-    consoles: string[];
-} = {
-    consoles: [],
-};
-
 type Store = typeof initialStore;
 type CallBackFunction<S> = (v: Store) => S;
 type SetStoreCallback = (value: Store) => Partial<Store>;
+type InitailState = {
+    logs: string[];
+};
+
+export const initialStore: InitailState = {
+    logs: [],
+};
 
 export const createStore = (initialStore: Store) => {
     let state = initialStore;
@@ -30,9 +31,10 @@ export const createStore = (initialStore: Store) => {
 
 export const store = createStore(initialStore);
 
-export const useStore = <V>(func: CallBackFunction<V>): V => {
+export const useStore = <V>(callback: CallBackFunction<V>): V => {
     return useSyncExternalStore(
         store.subscribe,
-        useCallback(() => func(store.getState()), [])
+        useCallback(() => callback(store.getState()), []),
+        () => callback(initialStore)
     ) as V;
 };
