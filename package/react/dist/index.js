@@ -1,6 +1,8 @@
 "use strict";
 var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
@@ -16,6 +18,19 @@ var __spreadValues = (a, b) => {
         __defNormalProp(a, prop, b[prop]);
     }
   return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
 };
 var __export = (target, all) => {
   for (var name in all)
@@ -40,7 +55,7 @@ __export(react_exports, {
 module.exports = __toCommonJS(react_exports);
 
 // src/SmartConsoleDevTool/index.tsx
-var import_react2 = require("react");
+var import_react3 = require("react");
 
 // src/store/index.ts
 var import_react = require("react");
@@ -70,17 +85,69 @@ var useStore = (callback) => {
   );
 };
 
-// src/SmartConsoleDevTool/index.tsx
-var import_jsx_runtime = require("react/jsx-runtime");
-var SmartConsoleDevTools = () => {
-  const [isSsr, setIsSsr] = (0, import_react2.useState)(true);
-  const logs = useStore((sate) => sate.logs);
+// src/SmartConsoleDevTool/style-component.ts
+var import_react2 = require("react");
+var styled = (type, newStyles = {}, queries = {}) => {
+  const ForwardComponent = (0, import_react2.forwardRef)((_a, ref) => {
+    var _b = _a, { style } = _b, rest = __objRest(_b, ["style"]);
+    const theme = {};
+    const mediaStyles = Object.entries(queries).reduce(
+      (current, [key, value]) => {
+        return useMediaQuery(key) ? __spreadValues(__spreadValues({}, current), typeof value === "function" ? value(
+          rest,
+          theme
+        ) : value) : current;
+      },
+      {}
+    );
+    return (0, import_react2.createElement)(type, __spreadProps(__spreadValues({}, rest), {
+      style: __spreadValues(__spreadValues(__spreadValues({}, typeof newStyles === "function" ? newStyles(rest, theme) : newStyles), style), mediaStyles),
+      ref
+    }));
+  });
+  ForwardComponent.displayName = "SmartConsole" + type;
+  return ForwardComponent;
+};
+function useMediaQuery(query) {
+  const [isMatch, setIsMatch] = (0, import_react2.useState)(
+    () => window.matchMedia && window.matchMedia(query).matches
+  );
   (0, import_react2.useEffect)(() => {
+    if (!window.matchMedia) {
+      return;
+    }
+    const matcher = window.matchMedia(query);
+    const onChange = ({ matches }) => setIsMatch(matches);
+    matcher.addListener(onChange);
+    return () => {
+      matcher.removeListener(onChange);
+    };
+  }, [isMatch, query, setIsMatch]);
+  return isMatch;
+}
+var style_component_default = styled;
+
+// src/SmartConsoleDevTool/SmartConsoleProvider.tsx
+var import_jsx_runtime = require("react/jsx-runtime");
+var Div = style_component_default("div", {
+  background: "blue"
+});
+var SmartConsoleProvider = () => {
+  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Div, { style: { height: "300px" }, value: "green", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "Tusher" }) });
+};
+var SmartConsoleProvider_default = SmartConsoleProvider;
+
+// src/SmartConsoleDevTool/index.tsx
+var import_jsx_runtime2 = require("react/jsx-runtime");
+var SmartConsoleDevTools = () => {
+  const [isSsr, setIsSsr] = (0, import_react3.useState)(true);
+  const logs = useStore((sate) => sate.logs);
+  (0, import_react3.useEffect)(() => {
     setIsSsr(false);
   }, []);
   if (isSsr)
     return null;
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
     "div",
     {
       style: {
@@ -90,9 +157,12 @@ var SmartConsoleDevTools = () => {
         right: 0,
         background: "red"
       },
-      children: logs.map((value, index) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", { children: value }, index);
-      })
+      children: [
+        logs.map((value, index) => {
+          return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: value }, index);
+        }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(SmartConsoleProvider_default, {})
+      ]
     }
   );
 };

@@ -1,4 +1,6 @@
 var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
@@ -14,9 +16,22 @@ var __spreadValues = (a, b) => {
     }
   return a;
 };
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
 
 // src/SmartConsoleDevTool/index.tsx
-import { useEffect, useState } from "react";
+import { useEffect as useEffect2, useState as useState2 } from "react";
 
 // src/store/index.ts
 import { useCallback, useSyncExternalStore } from "react";
@@ -46,17 +61,74 @@ var useStore = (callback) => {
   );
 };
 
-// src/SmartConsoleDevTool/index.tsx
-import { jsx } from "react/jsx-runtime";
-var SmartConsoleDevTools = () => {
-  const [isSsr, setIsSsr] = useState(true);
-  const logs = useStore((sate) => sate.logs);
+// src/SmartConsoleDevTool/style-component.ts
+import {
+  forwardRef,
+  createElement,
+  useEffect,
+  useState
+} from "react";
+var styled = (type, newStyles = {}, queries = {}) => {
+  const ForwardComponent = forwardRef((_a, ref) => {
+    var _b = _a, { style } = _b, rest = __objRest(_b, ["style"]);
+    const theme = {};
+    const mediaStyles = Object.entries(queries).reduce(
+      (current, [key, value]) => {
+        return useMediaQuery(key) ? __spreadValues(__spreadValues({}, current), typeof value === "function" ? value(
+          rest,
+          theme
+        ) : value) : current;
+      },
+      {}
+    );
+    return createElement(type, __spreadProps(__spreadValues({}, rest), {
+      style: __spreadValues(__spreadValues(__spreadValues({}, typeof newStyles === "function" ? newStyles(rest, theme) : newStyles), style), mediaStyles),
+      ref
+    }));
+  });
+  ForwardComponent.displayName = "SmartConsole" + type;
+  return ForwardComponent;
+};
+function useMediaQuery(query) {
+  const [isMatch, setIsMatch] = useState(
+    () => window.matchMedia && window.matchMedia(query).matches
+  );
   useEffect(() => {
+    if (!window.matchMedia) {
+      return;
+    }
+    const matcher = window.matchMedia(query);
+    const onChange = ({ matches }) => setIsMatch(matches);
+    matcher.addListener(onChange);
+    return () => {
+      matcher.removeListener(onChange);
+    };
+  }, [isMatch, query, setIsMatch]);
+  return isMatch;
+}
+var style_component_default = styled;
+
+// src/SmartConsoleDevTool/SmartConsoleProvider.tsx
+import { jsx } from "react/jsx-runtime";
+var Div = style_component_default("div", {
+  background: "blue"
+});
+var SmartConsoleProvider = () => {
+  return /* @__PURE__ */ jsx(Div, { style: { height: "300px" }, value: "green", children: /* @__PURE__ */ jsx("div", { children: "Tusher" }) });
+};
+var SmartConsoleProvider_default = SmartConsoleProvider;
+
+// src/SmartConsoleDevTool/index.tsx
+import { jsx as jsx2, jsxs } from "react/jsx-runtime";
+var SmartConsoleDevTools = () => {
+  const [isSsr, setIsSsr] = useState2(true);
+  const logs = useStore((sate) => sate.logs);
+  useEffect2(() => {
     setIsSsr(false);
   }, []);
   if (isSsr)
     return null;
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ jsxs(
     "div",
     {
       style: {
@@ -66,9 +138,12 @@ var SmartConsoleDevTools = () => {
         right: 0,
         background: "red"
       },
-      children: logs.map((value, index) => {
-        return /* @__PURE__ */ jsx("li", { children: value }, index);
-      })
+      children: [
+        logs.map((value, index) => {
+          return /* @__PURE__ */ jsx2("li", { children: value }, index);
+        }),
+        /* @__PURE__ */ jsx2(SmartConsoleProvider_default, {})
+      ]
     }
   );
 };

@@ -6,18 +6,30 @@ import {
     ReactHTML,
     HTMLProps,
     ElementType,
+    CSSProperties,
 } from 'react';
 
-export const styled = <Type extends keyof ReactHTML>(
+type Query<Type> = {
+    [key: string]: CSSProperties | QueryFunction<Type>;
+};
+
+type QueryFunction<RestType> = (
+    rest: RestType,
+    theme: CSSProperties
+) => CSSProperties;
+
+export const styled = <
+    Type extends keyof ReactHTML,
+    ComponentProps extends HTMLProps<Type>,
+    OthersType
+>(
     type: Type,
-    newStyles: {} = {},
-    queries = {}
+    newStyles: CSSProperties | QueryFunction<OthersType> = {},
+    queries: Query<OthersType> = {}
 ) => {
     const ForwardComponent = forwardRef<
         ElementType<Type>,
-        {
-            style?: StyleSheet;
-        } & HTMLProps<Type>
+        ComponentProps & OthersType
     >(({ style, ...rest }, ref) => {
         // const theme = useTheme();
         const theme = {};
@@ -28,7 +40,10 @@ export const styled = <Type extends keyof ReactHTML>(
                     ? {
                           ...current,
                           ...(typeof value === 'function'
-                              ? value(rest, theme)
+                              ? (value(
+                                    rest as OthersType,
+                                    theme
+                                ) as CSSProperties)
                               : value),
                       }
                     : current;
@@ -40,7 +55,7 @@ export const styled = <Type extends keyof ReactHTML>(
             ...rest,
             style: {
                 ...(typeof newStyles === 'function'
-                    ? newStyles(rest, theme)
+                    ? newStyles(rest as OthersType, theme)
                     : newStyles),
                 ...style,
                 ...mediaStyles,
