@@ -8,6 +8,7 @@ import {
     ElementType,
     CSSProperties,
 } from 'react';
+import { useTheme } from './ThemeProvider';
 
 type Query<Type> = {
     [key: string]: CSSProperties | QueryFunction<Type>;
@@ -15,7 +16,7 @@ type Query<Type> = {
 
 type QueryFunction<RestType> = (
     rest: RestType,
-    theme: CSSProperties
+    theme: ReturnType<typeof useTheme>
 ) => CSSProperties;
 
 export const styled = <
@@ -31,8 +32,7 @@ export const styled = <
         ElementType<Type>,
         ComponentProps & OthersType
     >(({ style, ...rest }, ref) => {
-        // const theme = useTheme();
-        const theme = {};
+        const theme = useTheme();
 
         const mediaStyles = Object.entries(queries).reduce(
             (current, [key, value]) => {

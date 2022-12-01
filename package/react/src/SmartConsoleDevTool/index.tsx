@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useStore } from '../store';
-import SmartConsoleProvider from './SmartConsoleProvider';
+import { Container } from './Styles';
 
 const SmartConsoleDevTools = () => {
     const [isSsr, setIsSsr] = useState(true);
@@ -13,19 +13,11 @@ const SmartConsoleDevTools = () => {
     if (isSsr) return null;
 
     return (
-        <div
-            style={{
-                position: 'fixed',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                background: 'red',
-            }}>
+        <Container>
             {logs.map((value, index) => {
                 return <li key={index}>{value}</li>;
             })}
-            <SmartConsoleProvider />
-        </div>
+        </Container>
     );
 };
 

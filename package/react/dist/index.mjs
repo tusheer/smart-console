@@ -68,21 +68,36 @@ import {
   useEffect,
   useState
 } from "react";
+
+// src/SmartConsoleDevTool/ThemeProvider.tsx
+import React from "react";
+import { jsx } from "react/jsx-runtime";
+var theme = {
+  color: {
+    primary: "black"
+  }
+};
+var ThemeContext = React.createContext(theme);
+function useTheme() {
+  return React.useContext(ThemeContext);
+}
+
+// src/SmartConsoleDevTool/style-component.ts
 var styled = (type, newStyles = {}, queries = {}) => {
   const ForwardComponent = forwardRef((_a, ref) => {
     var _b = _a, { style } = _b, rest = __objRest(_b, ["style"]);
-    const theme = {};
+    const theme2 = useTheme();
     const mediaStyles = Object.entries(queries).reduce(
       (current, [key, value]) => {
         return useMediaQuery(key) ? __spreadValues(__spreadValues({}, current), typeof value === "function" ? value(
           rest,
-          theme
+          theme2
         ) : value) : current;
       },
       {}
     );
     return createElement(type, __spreadProps(__spreadValues({}, rest), {
-      style: __spreadValues(__spreadValues(__spreadValues({}, typeof newStyles === "function" ? newStyles(rest, theme) : newStyles), style), mediaStyles),
+      style: __spreadValues(__spreadValues(__spreadValues({}, typeof newStyles === "function" ? newStyles(rest, theme2) : newStyles), style), mediaStyles),
       ref
     }));
   });
@@ -108,18 +123,20 @@ function useMediaQuery(query) {
 }
 var style_component_default = styled;
 
-// src/SmartConsoleDevTool/SmartConsoleProvider.tsx
-import { jsx } from "react/jsx-runtime";
-var Div = style_component_default("div", {
-  background: "blue"
+// src/SmartConsoleDevTool/Styles.tsx
+var Container = style_component_default("div", (_, theme2) => {
+  return {
+    background: theme2.color.primary,
+    color: "white",
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    right: 0
+  };
 });
-var SmartConsoleProvider = () => {
-  return /* @__PURE__ */ jsx(Div, { style: { height: "300px" }, value: "green", children: /* @__PURE__ */ jsx("div", { children: "Tusher" }) });
-};
-var SmartConsoleProvider_default = SmartConsoleProvider;
 
 // src/SmartConsoleDevTool/index.tsx
-import { jsx as jsx2, jsxs } from "react/jsx-runtime";
+import { jsx as jsx2 } from "react/jsx-runtime";
 var SmartConsoleDevTools = () => {
   const [isSsr, setIsSsr] = useState2(true);
   const logs = useStore((sate) => sate.logs);
@@ -128,24 +145,9 @@ var SmartConsoleDevTools = () => {
   }, []);
   if (isSsr)
     return null;
-  return /* @__PURE__ */ jsxs(
-    "div",
-    {
-      style: {
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        background: "red"
-      },
-      children: [
-        logs.map((value, index) => {
-          return /* @__PURE__ */ jsx2("li", { children: value }, index);
-        }),
-        /* @__PURE__ */ jsx2(SmartConsoleProvider_default, {})
-      ]
-    }
-  );
+  return /* @__PURE__ */ jsx2(Container, { children: logs.map((value, index) => {
+    return /* @__PURE__ */ jsx2("li", { children: value }, index);
+  }) });
 };
 var SmartConsoleDevTool_default = SmartConsoleDevTools;
 

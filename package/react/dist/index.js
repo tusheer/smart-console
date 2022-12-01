@@ -1,10 +1,12 @@
 "use strict";
+var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
@@ -44,6 +46,10 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // index.ts
@@ -55,7 +61,7 @@ __export(react_exports, {
 module.exports = __toCommonJS(react_exports);
 
 // src/SmartConsoleDevTool/index.tsx
-var import_react3 = require("react");
+var import_react4 = require("react");
 
 // src/store/index.ts
 var import_react = require("react");
@@ -86,22 +92,37 @@ var useStore = (callback) => {
 };
 
 // src/SmartConsoleDevTool/style-component.ts
-var import_react2 = require("react");
+var import_react3 = require("react");
+
+// src/SmartConsoleDevTool/ThemeProvider.tsx
+var import_react2 = __toESM(require("react"));
+var import_jsx_runtime = require("react/jsx-runtime");
+var theme = {
+  color: {
+    primary: "black"
+  }
+};
+var ThemeContext = import_react2.default.createContext(theme);
+function useTheme() {
+  return import_react2.default.useContext(ThemeContext);
+}
+
+// src/SmartConsoleDevTool/style-component.ts
 var styled = (type, newStyles = {}, queries = {}) => {
-  const ForwardComponent = (0, import_react2.forwardRef)((_a, ref) => {
+  const ForwardComponent = (0, import_react3.forwardRef)((_a, ref) => {
     var _b = _a, { style } = _b, rest = __objRest(_b, ["style"]);
-    const theme = {};
+    const theme2 = useTheme();
     const mediaStyles = Object.entries(queries).reduce(
       (current, [key, value]) => {
         return useMediaQuery(key) ? __spreadValues(__spreadValues({}, current), typeof value === "function" ? value(
           rest,
-          theme
+          theme2
         ) : value) : current;
       },
       {}
     );
-    return (0, import_react2.createElement)(type, __spreadProps(__spreadValues({}, rest), {
-      style: __spreadValues(__spreadValues(__spreadValues({}, typeof newStyles === "function" ? newStyles(rest, theme) : newStyles), style), mediaStyles),
+    return (0, import_react3.createElement)(type, __spreadProps(__spreadValues({}, rest), {
+      style: __spreadValues(__spreadValues(__spreadValues({}, typeof newStyles === "function" ? newStyles(rest, theme2) : newStyles), style), mediaStyles),
       ref
     }));
   });
@@ -109,10 +130,10 @@ var styled = (type, newStyles = {}, queries = {}) => {
   return ForwardComponent;
 };
 function useMediaQuery(query) {
-  const [isMatch, setIsMatch] = (0, import_react2.useState)(
+  const [isMatch, setIsMatch] = (0, import_react3.useState)(
     () => window.matchMedia && window.matchMedia(query).matches
   );
-  (0, import_react2.useEffect)(() => {
+  (0, import_react3.useEffect)(() => {
     if (!window.matchMedia) {
       return;
     }
@@ -127,44 +148,31 @@ function useMediaQuery(query) {
 }
 var style_component_default = styled;
 
-// src/SmartConsoleDevTool/SmartConsoleProvider.tsx
-var import_jsx_runtime = require("react/jsx-runtime");
-var Div = style_component_default("div", {
-  background: "blue"
+// src/SmartConsoleDevTool/Styles.tsx
+var Container = style_component_default("div", (_, theme2) => {
+  return {
+    background: theme2.color.primary,
+    color: "white",
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    right: 0
+  };
 });
-var SmartConsoleProvider = () => {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Div, { style: { height: "300px" }, value: "green", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: "Tusher" }) });
-};
-var SmartConsoleProvider_default = SmartConsoleProvider;
 
 // src/SmartConsoleDevTool/index.tsx
 var import_jsx_runtime2 = require("react/jsx-runtime");
 var SmartConsoleDevTools = () => {
-  const [isSsr, setIsSsr] = (0, import_react3.useState)(true);
+  const [isSsr, setIsSsr] = (0, import_react4.useState)(true);
   const logs = useStore((sate) => sate.logs);
-  (0, import_react3.useEffect)(() => {
+  (0, import_react4.useEffect)(() => {
     setIsSsr(false);
   }, []);
   if (isSsr)
     return null;
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
-    "div",
-    {
-      style: {
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        background: "red"
-      },
-      children: [
-        logs.map((value, index) => {
-          return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: value }, index);
-        }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(SmartConsoleProvider_default, {})
-      ]
-    }
-  );
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Container, { children: logs.map((value, index) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: value }, index);
+  }) });
 };
 var SmartConsoleDevTool_default = SmartConsoleDevTools;
 
