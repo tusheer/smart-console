@@ -2,7 +2,8 @@ import React from 'react';
 
 const theme = {
     color: {
-        primary: 'black',
+        primary: '#161b22',
+        'grey:300': '#f2f2f2f2',
     },
 };
 

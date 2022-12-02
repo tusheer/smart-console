@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useStore } from '../store';
-import { Container } from './Styles';
+import { Container, List, ListContainer } from './Styles';
 
 const SmartConsoleDevTools = () => {
     const [isSsr, setIsSsr] = useState(true);
@@ -14,11 +14,11 @@ const SmartConsoleDevTools = () => {
 
     return (
         <Container>
-            <ul data-testid="ul">
+            <ListContainer data-testid="ul">
                 {logs.map((value, index) => {
-                    return <li key={index}>{value}</li>;
+                    return <List key={index}>{value}</List>;
                 })}
-            </ul>
+            </ListContainer>
         </Container>
     );
 };

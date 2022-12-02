@@ -99,7 +99,8 @@ var import_react2 = __toESM(require("react"));
 var import_jsx_runtime = require("react/jsx-runtime");
 var theme = {
   color: {
-    primary: "black"
+    primary: "#161b22",
+    "grey:300": "#f2f2f2f2"
   }
 };
 var ThemeContext = import_react2.default.createContext(theme);
@@ -151,12 +152,28 @@ var style_component_default = styled;
 // src/SmartConsoleDevTool/Styles.tsx
 var Container = style_component_default("div", (_, theme2) => {
   return {
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol',
+    padding: "0px",
     background: theme2.color.primary,
     color: "white",
     position: "fixed",
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
+    height: "300px",
+    borderTop: "0.5px solid  #100000f",
+    margin: 0
+  };
+});
+var ListContainer = style_component_default("ul", () => {
+  return {
+    padding: 0,
+    margin: 0
+  };
+});
+var List = style_component_default("li", () => {
+  return {
+    color: "red"
   };
 });
 
@@ -170,8 +187,8 @@ var SmartConsoleDevTools = () => {
   }, []);
   if (isSsr)
     return null;
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Container, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("ul", { "data-testid": "ul", children: logs.map((value, index) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: value }, index);
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Container, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ListContainer, { "data-testid": "ul", children: logs.map((value, index) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(List, { children: value }, index);
   }) }) });
 };
 var SmartConsoleDevTool_default = SmartConsoleDevTools;
