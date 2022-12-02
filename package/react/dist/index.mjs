@@ -145,7 +145,7 @@ var SmartConsoleDevTools = () => {
   }, []);
   if (isSsr)
     return null;
-  return /* @__PURE__ */ jsx2(Container, { children: logs.map((value, index) => {
+  return /* @__PURE__ */ jsx2(Container, { "test-id": "container", children: logs.map((value, index) => {
     return /* @__PURE__ */ jsx2("li", { children: value }, index);
   }) });
 };

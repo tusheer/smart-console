@@ -170,7 +170,7 @@ var SmartConsoleDevTools = () => {
   }, []);
   if (isSsr)
     return null;
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Container, { children: logs.map((value, index) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Container, { "test-id": "container", children: logs.map((value, index) => {
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: value }, index);
   }) });
 };
