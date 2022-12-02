@@ -13,10 +13,12 @@ const SmartConsoleDevTools = () => {
     if (isSsr) return null;
 
     return (
-        <Container test-id="container">
-            {logs.map((value, index) => {
-                return <li key={index}>{value}</li>;
-            })}
+        <Container>
+            <ul data-testid="ul">
+                {logs.map((value, index) => {
+                    return <li key={index}>{value}</li>;
+                })}
+            </ul>
         </Container>
     );
 };

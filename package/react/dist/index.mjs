@@ -145,9 +145,9 @@ var SmartConsoleDevTools = () => {
   }, []);
   if (isSsr)
     return null;
-  return /* @__PURE__ */ jsx2(Container, { "test-id": "container", children: logs.map((value, index) => {
+  return /* @__PURE__ */ jsx2(Container, { children: /* @__PURE__ */ jsx2("ul", { "data-testid": "ul", children: logs.map((value, index) => {
     return /* @__PURE__ */ jsx2("li", { children: value }, index);
-  }) });
+  }) }) });
 };
 var SmartConsoleDevTool_default = SmartConsoleDevTools;
 

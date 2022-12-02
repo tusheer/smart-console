@@ -170,9 +170,9 @@ var SmartConsoleDevTools = () => {
   }, []);
   if (isSsr)
     return null;
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Container, { "test-id": "container", children: logs.map((value, index) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Container, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("ul", { "data-testid": "ul", children: logs.map((value, index) => {
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: value }, index);
-  }) });
+  }) }) });
 };
 var SmartConsoleDevTool_default = SmartConsoleDevTools;
 
