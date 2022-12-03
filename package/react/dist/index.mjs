@@ -143,17 +143,38 @@ var Container = style_component_default("div", (_, theme2) => {
 var ListContainer = style_component_default("ul", () => {
   return {
     padding: 0,
-    margin: 0
+    margin: 0,
+    marginTop: "20px"
   };
 });
-var List = style_component_default("li", () => {
+var List = style_component_default("li", (_, theme2) => {
   return {
-    color: "red"
+    color: theme2.color["grey:300"],
+    background: "#fffffc10",
+    borderBottom: "1px solid #ffffff15",
+    display: "flex"
+  };
+});
+var LogStatus = style_component_default("div", (_, theme2) => {
+  return {
+    boxSizing: "border-box",
+    borderLeft: "2px solid #c9f236",
+    color: theme2.color["grey:300"],
+    width: "50px",
+    padding: "2px 4px",
+    fontSize: "16px",
+    textTransform: "uppercase"
+  };
+});
+var LogBody = style_component_default("div", (_, theme2) => {
+  return {
+    padding: "2px 2px",
+    color: theme2.color["grey:300"]
   };
 });
 
 // src/SmartConsoleDevTool/index.tsx
-import { jsx as jsx2 } from "react/jsx-runtime";
+import { jsx as jsx2, jsxs } from "react/jsx-runtime";
 var SmartConsoleDevTools = () => {
   const [isSsr, setIsSsr] = useState2(true);
   const logs = useStore((sate) => sate.logs);
@@ -163,7 +184,14 @@ var SmartConsoleDevTools = () => {
   if (isSsr)
     return null;
   return /* @__PURE__ */ jsx2(Container, { children: /* @__PURE__ */ jsx2(ListContainer, { "data-testid": "ul", children: logs.map((value, index) => {
-    return /* @__PURE__ */ jsx2(List, { children: value }, index);
+    return /* @__PURE__ */ jsxs(List, { children: [
+      /* @__PURE__ */ jsxs(LogStatus, { children: [
+        " ",
+        value.type,
+        " "
+      ] }),
+      /* @__PURE__ */ jsx2(LogBody, { children: value.data })
+    ] }, index);
   }) }) });
 };
 var SmartConsoleDevTool_default = SmartConsoleDevTools;
@@ -173,14 +201,28 @@ var console = {};
 var log = (log2) => {
   store.setState((value) => {
     return {
-      logs: [...value.logs, log2]
+      logs: [
+        ...value.logs,
+        {
+          data: log2,
+          time: new Date(),
+          type: "log"
+        }
+      ]
     };
   });
 };
 var errorr = (log2) => {
   store.setState((value) => {
     return {
-      logs: [...value.logs, log2]
+      logs: [
+        ...value.logs,
+        {
+          data: log2,
+          time: new Date(),
+          type: "log"
+        }
+      ]
     };
   });
 };

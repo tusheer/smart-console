@@ -3,8 +3,15 @@ import { useCallback, useSyncExternalStore } from 'react';
 type Store = typeof initialStore;
 type CallBackFunction<S> = (v: Store) => S;
 type SetStoreCallback = (value: Store) => Partial<Store>;
+
+type Log = {
+    type: 'error' | 'log' | 'success' | 'info' | 'describe';
+    data: any;
+    time: Date;
+};
+
 type InitailState = {
-    logs: string[];
+    logs: Log[];
 };
 
 export const initialStore: InitailState = {
