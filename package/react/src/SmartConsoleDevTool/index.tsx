@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ThemeProvider from './ThemeProvider';
 import { useStore } from '../store';
 import { Container, List, ListContainer, LogBody, LogStatus } from './Styles';
 
@@ -13,18 +14,20 @@ const SmartConsoleDevTools = () => {
     if (isSsr) return null;
 
     return (
-        <Container>
-            <ListContainer data-testid="ul">
-                {logs.map((value, index) => {
-                    return (
-                        <List key={index}>
-                            <LogStatus> {value.type} </LogStatus>
-                            <LogBody>{value.data}</LogBody>
-                        </List>
-                    );
-                })}
-            </ListContainer>
-        </Container>
+        <ThemeProvider>
+            <Container>
+                <ListContainer data-testid="ul">
+                    {logs.map((value, index) => {
+                        return (
+                            <List key={index}>
+                                <LogStatus> {value.type} </LogStatus>
+                                <LogBody>{value.data}</LogBody>
+                            </List>
+                        );
+                    })}
+                </ListContainer>
+            </Container>
+        </ThemeProvider>
     );
 };
 

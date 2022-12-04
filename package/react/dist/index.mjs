@@ -1,6 +1,4 @@
 var __defProp = Object.defineProperty;
-var __defProps = Object.defineProperties;
-var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
@@ -16,22 +14,23 @@ var __spreadValues = (a, b) => {
     }
   return a;
 };
-var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-var __objRest = (source, exclude) => {
-  var target = {};
-  for (var prop in source)
-    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
-      target[prop] = source[prop];
-  if (source != null && __getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(source)) {
-      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
-        target[prop] = source[prop];
-    }
-  return target;
-};
 
 // src/SmartConsoleDevTool/index.tsx
-import { useEffect as useEffect2, useState as useState2 } from "react";
+import { useEffect, useState } from "react";
+
+// src/SmartConsoleDevTool/ThemeProvider.tsx
+import { ThemeProvider as Provider } from "styled-components";
+import { jsx } from "react/jsx-runtime";
+var theme = {
+  color: {
+    primary: "#161b22",
+    "grey:300": "#f2f2f2f2"
+  }
+};
+var ThemeProvider = (props) => {
+  return /* @__PURE__ */ jsx(Provider, { theme, children: props.children });
+};
+var ThemeProvider_default = ThemeProvider;
 
 // src/store/index.ts
 import { useCallback, useSyncExternalStore } from "react";
@@ -61,129 +60,57 @@ var useStore = (callback) => {
   );
 };
 
-// src/SmartConsoleDevTool/style-component.ts
-import {
-  forwardRef,
-  createElement,
-  useEffect,
-  useState
-} from "react";
-
-// src/SmartConsoleDevTool/ThemeProvider.tsx
-import React from "react";
-import { jsx } from "react/jsx-runtime";
-var theme = {
-  color: {
-    primary: "#161b22",
-    "grey:300": "#f2f2f2f2"
-  }
-};
-var ThemeContext = React.createContext(theme);
-function useTheme() {
-  return React.useContext(ThemeContext);
-}
-
-// src/SmartConsoleDevTool/style-component.ts
-var styled = (type, newStyles = {}, queries = {}) => {
-  const ForwardComponent = forwardRef((_a, ref) => {
-    var _b = _a, { style } = _b, rest = __objRest(_b, ["style"]);
-    const theme2 = useTheme();
-    const mediaStyles = Object.entries(queries).reduce(
-      (current, [key, value]) => {
-        return useMediaQuery(key) ? __spreadValues(__spreadValues({}, current), typeof value === "function" ? value(
-          rest,
-          theme2
-        ) : value) : current;
-      },
-      {}
-    );
-    return createElement(type, __spreadProps(__spreadValues({}, rest), {
-      style: __spreadValues(__spreadValues(__spreadValues({}, typeof newStyles === "function" ? newStyles(rest, theme2) : newStyles), style), mediaStyles),
-      ref
-    }));
-  });
-  ForwardComponent.displayName = "SmartConsole" + type;
-  return ForwardComponent;
-};
-function useMediaQuery(query) {
-  const [isMatch, setIsMatch] = useState(
-    () => window.matchMedia && window.matchMedia(query).matches
-  );
-  useEffect(() => {
-    if (!window.matchMedia) {
-      return;
-    }
-    const matcher = window.matchMedia(query);
-    const onChange = ({ matches }) => setIsMatch(matches);
-    matcher.addListener(onChange);
-    return () => {
-      matcher.removeListener(onChange);
-    };
-  }, [isMatch, query, setIsMatch]);
-  return isMatch;
-}
-var style_component_default = styled;
-
 // src/SmartConsoleDevTool/Styles.tsx
-var Container = style_component_default("div", (_, theme2) => {
-  return {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol',
-    padding: "0px",
-    background: theme2.color.primary,
-    color: "white",
-    position: "fixed",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: "300px",
-    borderTop: "0.5px solid  #100000f",
-    margin: 0
-  };
-});
-var ListContainer = style_component_default("ul", () => {
-  return {
-    padding: 0,
-    margin: 0,
-    marginTop: "20px"
-  };
-});
-var List = style_component_default("li", (_, theme2) => {
-  return {
-    color: theme2.color["grey:300"],
-    background: "#fffffc10",
-    borderBottom: "1px solid #ffffff15",
-    display: "flex"
-  };
-});
-var LogStatus = style_component_default("div", (_, theme2) => {
-  return {
-    boxSizing: "border-box",
-    borderLeft: "2px solid #c9f236",
-    color: theme2.color["grey:300"],
-    width: "50px",
-    padding: "2px 4px",
-    fontSize: "16px",
-    textTransform: "uppercase"
-  };
-});
-var LogBody = style_component_default("div", (_, theme2) => {
-  return {
-    padding: "2px 2px",
-    color: theme2.color["grey:300"]
-  };
-});
+import styled from "styled-components";
+var Container = styled.div`
+    fontfamily: -apple-system BlinkMacSystemFont 'Segoe UI' Roboto Helvetica
+        Arial sans-serif 'Apple Color Emoji' 'Segoe UI Emoji' 'Segoe UI Symbol';
+    padding: 0px;
+    background: red;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 300px;
+    border-top: 1px solid red;
+    margin: 0;
+`;
+var ListContainer = styled.ul`
+    padding: 0;
+    margin: 0;
+`;
+var List = styled.li`
+    color: red;
+    background: #fffffc10;
+    borderbottom: 1px solid #ffffff15;
+    display: flex;
+`;
+var LogStatus = styled.div`
+    boxsizing: border-box;
+    border-left: 2px solid #c9f236;
+    color: red;
+    width: 50px;
+    padding: 2px 4px;
+    font-size: 16px;
+    texttransform: uppercase;
+`;
+var LogBody = styled.div`
+    padding: 2px 2px;
+    color: red;
+`;
 
 // src/SmartConsoleDevTool/index.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
 var SmartConsoleDevTools = () => {
-  const [isSsr, setIsSsr] = useState2(true);
+  const [isSsr, setIsSsr] = useState(true);
   const logs = useStore((sate) => sate.logs);
-  useEffect2(() => {
+  useEffect(() => {
     setIsSsr(false);
   }, []);
   if (isSsr)
     return null;
-  return /* @__PURE__ */ jsx2(Container, { children: /* @__PURE__ */ jsx2(ListContainer, { "data-testid": "ul", children: logs.map((value, index) => {
+  return /* @__PURE__ */ jsx2(ThemeProvider_default, { children: /* @__PURE__ */ jsx2(Container, { children: /* @__PURE__ */ jsx2(ListContainer, { "data-testid": "ul", children: logs.map((value, index) => {
     return /* @__PURE__ */ jsxs(List, { children: [
       /* @__PURE__ */ jsxs(LogStatus, { children: [
         " ",
@@ -192,7 +119,7 @@ var SmartConsoleDevTools = () => {
       ] }),
       /* @__PURE__ */ jsx2(LogBody, { children: value.data })
     ] }, index);
-  }) }) });
+  }) }) }) });
 };
 var SmartConsoleDevTool_default = SmartConsoleDevTools;
 
