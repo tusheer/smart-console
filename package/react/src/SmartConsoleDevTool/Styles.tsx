@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-    fontfamily: -apple-system BlinkMacSystemFont 'Segoe UI' Roboto Helvetica
-        Arial sans-serif 'Apple Color Emoji' 'Segoe UI Emoji' 'Segoe UI Symbol';
+    font-family: 'system-ui' !important;
     padding: 0px;
     background: ${(props) => props.theme.color.primary};
     color: white;
@@ -21,16 +20,19 @@ export const ListContainer = styled.ul`
 `;
 
 export const List = styled.li`
-    color: red;
+    color: blue;
     background: #fffffc10;
     borderbottom: 1px solid #ffffff15;
     display: flex;
+    &:hover {
+        color: green;
+    }
 `;
 
 export const LogStatus = styled.div`
     boxsizing: border-box;
     border-left: 2px solid #c9f236;
-    color: red;
+    /* color: red; */
     width: 50px;
     padding: 2px 4px;
     font-size: 16px;

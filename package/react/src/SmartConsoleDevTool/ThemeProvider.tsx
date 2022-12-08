@@ -16,4 +16,9 @@ const ThemeProvider: React.FC<IThemeProps> = (props) => {
     return <Provider theme={theme}>{props.children}</Provider>;
 };
 
+declare module '@emotion/react' {
+    type ThemeType = typeof theme;
+    export interface Theme extends ThemeType {}
+}
+
 export default ThemeProvider;
