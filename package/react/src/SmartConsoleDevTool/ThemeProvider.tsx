@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider as Provider } from 'styled-components';
+import { ThemeProvider as Provider } from '@emotion/react';
 
 export const theme = {
     color: {

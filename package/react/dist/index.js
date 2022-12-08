@@ -1,102 +1,17 @@
-"use strict";
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getOwnPropSymbols = Object.getOwnPropertySymbols;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
-    if (__hasOwnProp.call(b, prop))
-      __defNormalProp(a, prop, b[prop]);
-  if (__getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(b)) {
-      if (__propIsEnum.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    }
-  return a;
-};
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+'use strict';
 
-// index.ts
-var react_exports = {};
-__export(react_exports, {
-  SmartConsoleDevtool: () => SmartConsoleDevTool_default,
-  default: () => react_default
-});
-module.exports = __toCommonJS(react_exports);
+Object.defineProperty(exports, '__esModule', { value: true });
 
-// src/SmartConsoleDevTool/index.tsx
-var import_react2 = require("react");
+var react = require('react');
+var react$1 = require('@emotion/react');
+var jsxRuntime = require('react/jsx-runtime');
+var s = require('@emotion/styled');
 
-// src/SmartConsoleDevTool/ThemeProvider.tsx
-var import_styled_components = require("styled-components");
-var import_jsx_runtime = require("react/jsx-runtime");
-var theme = {
-  color: {
-    primary: "#161b22",
-    "grey:300": "#f2f2f2f2"
-  }
-};
-var ThemeProvider = (props) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_styled_components.ThemeProvider, { theme, children: props.children });
-};
-var ThemeProvider_default = ThemeProvider;
-
-// src/store/index.ts
-var import_react = require("react");
-var initialStore = {
-  logs: []
-};
-var createStore = (initialStore2) => {
-  let state = initialStore2;
-  const getState = () => state;
-  const listeners = /* @__PURE__ */ new Set();
-  const setState = (fn) => {
-    state = __spreadValues(__spreadValues({}, state), fn(state));
-    listeners.forEach((l) => l());
-  };
-  const subscribe = (listener) => {
-    listeners.add(listener);
-    return () => listeners.delete(listener);
-  };
-  return { getState, setState, subscribe };
-};
-var store = createStore(initialStore);
-var useStore = (callback) => {
-  return (0, import_react.useSyncExternalStore)(
-    store.subscribe,
-    (0, import_react.useCallback)(() => callback(store.getState()), []),
-    () => callback(initialStore)
-  );
-};
-
-// src/SmartConsoleDevTool/Styles.tsx
-var import_styled_components2 = __toESM(require("styled-components"));
-var Container = import_styled_components2.default.div`
+var C={color:{primary:"#161b22","grey:300":"#f2f2f2f2"}},L=t=>jsxRuntime.jsx(react$1.ThemeProvider,{theme:C,children:t.children}),p=L;var c={logs:[]},I=t=>{let e=t,a=()=>e,o=new Set;return {getState:a,setState:i=>{e={...e,...i(e)},o.forEach(b=>b());},subscribe:i=>(o.add(i),()=>o.delete(i))}},r=I(c),d=t=>react.useSyncExternalStore(r.subscribe,react.useCallback(()=>t(r.getState()),[]),()=>t(c));var m=s.div`
     fontfamily: -apple-system BlinkMacSystemFont 'Segoe UI' Roboto Helvetica
         Arial sans-serif 'Apple Color Emoji' 'Segoe UI Emoji' 'Segoe UI Symbol';
     padding: 0px;
-    background: red;
+    background: ${t=>t.theme.color.primary};
     color: white;
     position: fixed;
     bottom: 0;
@@ -105,18 +20,15 @@ var Container = import_styled_components2.default.div`
     height: 300px;
     border-top: 1px solid red;
     margin: 0;
-`;
-var ListContainer = import_styled_components2.default.ul`
+`,f=s.ul`
     padding: 0;
     margin: 0;
-`;
-var List = import_styled_components2.default.li`
+`,g=s.li`
     color: red;
     background: #fffffc10;
     borderbottom: 1px solid #ffffff15;
     display: flex;
-`;
-var LogStatus = import_styled_components2.default.div`
+`,S=s.div`
     boxsizing: border-box;
     border-left: 2px solid #c9f236;
     color: red;
@@ -124,73 +36,12 @@ var LogStatus = import_styled_components2.default.div`
     padding: 2px 4px;
     font-size: 16px;
     texttransform: uppercase;
-`;
-var LogBody = import_styled_components2.default.div`
+`,u=s.div`
     padding: 2px 2px;
     color: red;
-`;
+`;var E=()=>{let[t,e]=react.useState(!0),a=d(o=>o.logs);return react.useEffect(()=>{e(!1);},[]),t?null:jsxRuntime.jsx(p,{children:jsxRuntime.jsx(m,{children:jsxRuntime.jsx(f,{"data-testid":"ul",children:a.map((o,l)=>jsxRuntime.jsxs(g,{children:[jsxRuntime.jsxs(S,{children:[" ",o.type," "]}),jsxRuntime.jsx(u,{children:o.data})]},l))})})})},F=E;var w={},D=t=>{r.setState(e=>({logs:[...e.logs,{data:t,time:new Date,type:"log"}]}));},R=t=>{r.setState(e=>({logs:[...e.logs,{data:t,time:new Date,type:"log"}]}));},y=Object.assign(w,{log:D,errorr:R});var Z=y;
 
-// src/SmartConsoleDevTool/index.tsx
-var import_jsx_runtime2 = require("react/jsx-runtime");
-var SmartConsoleDevTools = () => {
-  const [isSsr, setIsSsr] = (0, import_react2.useState)(true);
-  const logs = useStore((sate) => sate.logs);
-  (0, import_react2.useEffect)(() => {
-    setIsSsr(false);
-  }, []);
-  if (isSsr)
-    return null;
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ThemeProvider_default, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Container, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ListContainer, { "data-testid": "ul", children: logs.map((value, index) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(List, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(LogStatus, { children: [
-        " ",
-        value.type,
-        " "
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(LogBody, { children: value.data })
-    ] }, index);
-  }) }) }) });
-};
-var SmartConsoleDevTool_default = SmartConsoleDevTools;
-
-// src/console/index.ts
-var console = {};
-var log = (log2) => {
-  store.setState((value) => {
-    return {
-      logs: [
-        ...value.logs,
-        {
-          data: log2,
-          time: new Date(),
-          type: "log"
-        }
-      ]
-    };
-  });
-};
-var errorr = (log2) => {
-  store.setState((value) => {
-    return {
-      logs: [
-        ...value.logs,
-        {
-          data: log2,
-          time: new Date(),
-          type: "log"
-        }
-      ]
-    };
-  });
-};
-var console_default = Object.assign(console, {
-  log,
-  errorr
-});
-
-// index.ts
-var react_default = console_default;
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  SmartConsoleDevtool
-});
+exports.SmartConsoleDevtool = F;
+exports.default = Z;
+//# sourceMappingURL=out.js.map
+//# sourceMappingURL=index.js.map

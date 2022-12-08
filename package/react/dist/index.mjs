@@ -1,72 +1,13 @@
-var __defProp = Object.defineProperty;
-var __getOwnPropSymbols = Object.getOwnPropertySymbols;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
-    if (__hasOwnProp.call(b, prop))
-      __defNormalProp(a, prop, b[prop]);
-  if (__getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(b)) {
-      if (__propIsEnum.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    }
-  return a;
-};
+import { useState, useEffect, useSyncExternalStore, useCallback } from 'react';
+import { ThemeProvider } from '@emotion/react';
+import { jsx, jsxs } from 'react/jsx-runtime';
+import s from '@emotion/styled';
 
-// src/SmartConsoleDevTool/index.tsx
-import { useEffect, useState } from "react";
-
-// src/SmartConsoleDevTool/ThemeProvider.tsx
-import { ThemeProvider as Provider } from "styled-components";
-import { jsx } from "react/jsx-runtime";
-var theme = {
-  color: {
-    primary: "#161b22",
-    "grey:300": "#f2f2f2f2"
-  }
-};
-var ThemeProvider = (props) => {
-  return /* @__PURE__ */ jsx(Provider, { theme, children: props.children });
-};
-var ThemeProvider_default = ThemeProvider;
-
-// src/store/index.ts
-import { useCallback, useSyncExternalStore } from "react";
-var initialStore = {
-  logs: []
-};
-var createStore = (initialStore2) => {
-  let state = initialStore2;
-  const getState = () => state;
-  const listeners = /* @__PURE__ */ new Set();
-  const setState = (fn) => {
-    state = __spreadValues(__spreadValues({}, state), fn(state));
-    listeners.forEach((l) => l());
-  };
-  const subscribe = (listener) => {
-    listeners.add(listener);
-    return () => listeners.delete(listener);
-  };
-  return { getState, setState, subscribe };
-};
-var store = createStore(initialStore);
-var useStore = (callback) => {
-  return useSyncExternalStore(
-    store.subscribe,
-    useCallback(() => callback(store.getState()), []),
-    () => callback(initialStore)
-  );
-};
-
-// src/SmartConsoleDevTool/Styles.tsx
-import styled from "styled-components";
-var Container = styled.div`
+var C={color:{primary:"#161b22","grey:300":"#f2f2f2f2"}},L=t=>jsx(ThemeProvider,{theme:C,children:t.children}),p=L;var c={logs:[]},I=t=>{let e=t,a=()=>e,o=new Set;return {getState:a,setState:i=>{e={...e,...i(e)},o.forEach(b=>b());},subscribe:i=>(o.add(i),()=>o.delete(i))}},r=I(c),d=t=>useSyncExternalStore(r.subscribe,useCallback(()=>t(r.getState()),[]),()=>t(c));var m=s.div`
     fontfamily: -apple-system BlinkMacSystemFont 'Segoe UI' Roboto Helvetica
         Arial sans-serif 'Apple Color Emoji' 'Segoe UI Emoji' 'Segoe UI Symbol';
     padding: 0px;
-    background: red;
+    background: ${t=>t.theme.color.primary};
     color: white;
     position: fixed;
     bottom: 0;
@@ -75,18 +16,15 @@ var Container = styled.div`
     height: 300px;
     border-top: 1px solid red;
     margin: 0;
-`;
-var ListContainer = styled.ul`
+`,f=s.ul`
     padding: 0;
     margin: 0;
-`;
-var List = styled.li`
+`,g=s.li`
     color: red;
     background: #fffffc10;
     borderbottom: 1px solid #ffffff15;
     display: flex;
-`;
-var LogStatus = styled.div`
+`,S=s.div`
     boxsizing: border-box;
     border-left: 2px solid #c9f236;
     color: red;
@@ -94,73 +32,11 @@ var LogStatus = styled.div`
     padding: 2px 4px;
     font-size: 16px;
     texttransform: uppercase;
-`;
-var LogBody = styled.div`
+`,u=s.div`
     padding: 2px 2px;
     color: red;
-`;
+`;var E=()=>{let[t,e]=useState(!0),a=d(o=>o.logs);return useEffect(()=>{e(!1);},[]),t?null:jsx(p,{children:jsx(m,{children:jsx(f,{"data-testid":"ul",children:a.map((o,l)=>jsxs(g,{children:[jsxs(S,{children:[" ",o.type," "]}),jsx(u,{children:o.data})]},l))})})})},F=E;var w={},D=t=>{r.setState(e=>({logs:[...e.logs,{data:t,time:new Date,type:"log"}]}));},R=t=>{r.setState(e=>({logs:[...e.logs,{data:t,time:new Date,type:"log"}]}));},y=Object.assign(w,{log:D,errorr:R});var Z=y;
 
-// src/SmartConsoleDevTool/index.tsx
-import { jsx as jsx2, jsxs } from "react/jsx-runtime";
-var SmartConsoleDevTools = () => {
-  const [isSsr, setIsSsr] = useState(true);
-  const logs = useStore((sate) => sate.logs);
-  useEffect(() => {
-    setIsSsr(false);
-  }, []);
-  if (isSsr)
-    return null;
-  return /* @__PURE__ */ jsx2(ThemeProvider_default, { children: /* @__PURE__ */ jsx2(Container, { children: /* @__PURE__ */ jsx2(ListContainer, { "data-testid": "ul", children: logs.map((value, index) => {
-    return /* @__PURE__ */ jsxs(List, { children: [
-      /* @__PURE__ */ jsxs(LogStatus, { children: [
-        " ",
-        value.type,
-        " "
-      ] }),
-      /* @__PURE__ */ jsx2(LogBody, { children: value.data })
-    ] }, index);
-  }) }) }) });
-};
-var SmartConsoleDevTool_default = SmartConsoleDevTools;
-
-// src/console/index.ts
-var console = {};
-var log = (log2) => {
-  store.setState((value) => {
-    return {
-      logs: [
-        ...value.logs,
-        {
-          data: log2,
-          time: new Date(),
-          type: "log"
-        }
-      ]
-    };
-  });
-};
-var errorr = (log2) => {
-  store.setState((value) => {
-    return {
-      logs: [
-        ...value.logs,
-        {
-          data: log2,
-          time: new Date(),
-          type: "log"
-        }
-      ]
-    };
-  });
-};
-var console_default = Object.assign(console, {
-  log,
-  errorr
-});
-
-// index.ts
-var react_default = console_default;
-export {
-  SmartConsoleDevTool_default as SmartConsoleDevtool,
-  react_default as default
-};
+export { F as SmartConsoleDevtool, Z as default };
+//# sourceMappingURL=out.js.map
+//# sourceMappingURL=index.mjs.map

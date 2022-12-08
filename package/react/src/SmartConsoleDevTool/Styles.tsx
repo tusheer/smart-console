@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const Container = styled.div`
     fontfamily: -apple-system BlinkMacSystemFont 'Segoe UI' Roboto Helvetica
         Arial sans-serif 'Apple Color Emoji' 'Segoe UI Emoji' 'Segoe UI Symbol';
     padding: 0px;
-    background: red;
+    background: ${(props) => props.theme.color.primary};
     color: white;
     position: fixed;
     bottom: 0;
