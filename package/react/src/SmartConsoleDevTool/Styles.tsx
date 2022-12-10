@@ -10,8 +10,9 @@ export const Container = styled.div`
     left: 0;
     right: 0;
     height: 300px;
-    border-top: 1px solid red;
+    border-top: 1px solid white;
     margin: 0;
+    overflow-y: auto;
 `;
 
 export const ListContainer = styled.ul`
@@ -20,9 +21,9 @@ export const ListContainer = styled.ul`
 `;
 
 export const List = styled.li`
-    color: blue;
+    color: ${(props) => props.theme.color.primary};
     background: #fffffc10;
-    borderbottom: 1px solid #ffffff15;
+    border-bottom: 1px solid #ffffff15;
     display: flex;
     &:hover {
         color: green;

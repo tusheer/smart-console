@@ -3,7 +3,7 @@ import { ThemeProvider } from '@emotion/react';
 import { jsx, jsxs } from 'react/jsx-runtime';
 import s from '@emotion/styled';
 
-var C={color:{primary:"#161b22","grey:300":"#f2f2f2f2"}},L=t=>jsx(ThemeProvider,{theme:C,children:t.children}),l=L;var c={logs:[]},k=t=>{let e=t,a=()=>e,o=new Set;return {getState:a,setState:i=>{e={...e,...i(e)},o.forEach(b=>b());},subscribe:i=>(o.add(i),()=>o.delete(i))}},r=k(c),d=t=>useSyncExternalStore(r.subscribe,useCallback(()=>t(r.getState()),[]),()=>t(c));var m=s.div`
+var v={color:{primary:"#161b22","grey:300":"#f2f2f2f2"}},C=t=>jsx(ThemeProvider,{theme:v,children:t.children}),l=C;var c={logs:[]},k=t=>{let e=t,a=()=>e,o=new Set;return {getState:a,setState:i=>{e={...e,...i(e)},o.forEach(h=>h());},subscribe:i=>(o.add(i),()=>o.delete(i))}},r=k(c),d=t=>useSyncExternalStore(r.subscribe,useCallback(()=>t(r.getState()),[]),()=>t(c));var m=s.div`
     font-family: 'system-ui' !important;
     padding: 0px;
     background: ${t=>t.theme.color.primary};
@@ -13,15 +13,16 @@ var C={color:{primary:"#161b22","grey:300":"#f2f2f2f2"}},L=t=>jsx(ThemeProvider,
     left: 0;
     right: 0;
     height: 300px;
-    border-top: 1px solid red;
+    border-top: 1px solid white;
     margin: 0;
+    overflow-y: auto;
 `,f=s.ul`
     padding: 0;
     margin: 0;
 `,g=s.li`
-    color: blue;
+    color: ${t=>t.theme.color.primary};
     background: #fffffc10;
-    borderbottom: 1px solid #ffffff15;
+    border-bottom: 1px solid #ffffff15;
     display: flex;
     &:hover {
         color: green;
