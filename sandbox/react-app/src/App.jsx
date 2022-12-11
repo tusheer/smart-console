@@ -1,12 +1,9 @@
 import Console, { SmartConsoleDevtool } from '@smart-console/react';
 import React from 'react';
-import { useState } from 'react';
 
 const App = () => {
-    const [state, setState] = useState(34);
     const handelValue = () => {
         Console.log('hi');
-        console.log(34);
     };
 
     return (
