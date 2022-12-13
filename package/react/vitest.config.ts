@@ -7,7 +7,7 @@ export default defineConfig({
     test: {
         exclude: [...configDefaults.exclude, 'src/*.{test,spec}.{ts,tsx}'],
         globals: true,
-        environment: 'jsdom',
+        environment: 'happy-dom',
     },
     plugins: [react()],
 });
