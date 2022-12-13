@@ -27,13 +27,15 @@ export const List = styled.li`
     display: flex;
 `;
 
-export const LogStatus = styled.div`
+export const LogStatus = styled.div<{
+    status: 'error' | 'log' | 'success' | 'info' | 'describe';
+}>`
     min-height: 25px;
     boxsizing: border-box;
     color: trasparent;
     min-width: 50px;
     padding: 2px 4px;
-    background: #ffc107;
+    background: ${(props) => props.theme.color[props.status]};
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -42,6 +44,6 @@ export const LogStatus = styled.div`
 `;
 
 export const LogBody = styled.div`
-    padding: 2px 2px;
+    padding: 4px 5px;
     color: white;
 `;

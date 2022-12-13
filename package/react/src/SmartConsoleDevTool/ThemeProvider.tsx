@@ -4,7 +4,11 @@ import { ThemeProvider as Provider } from '@emotion/react';
 export const theme = {
     color: {
         primary: '#161b22',
-        'grey:300': '#f2f2f2f2',
+        log: '#ffc107',
+        error: '#ed4337',
+        info: '',
+        describe: '',
+        success: '',
     },
 };
 

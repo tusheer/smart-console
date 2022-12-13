@@ -16,7 +16,7 @@ const log = (log: any) => {
         };
     });
 };
-const errorr = (log: any) => {
+const error = (log: any) => {
     store.setState((value) => {
         return {
             logs: [
@@ -24,7 +24,7 @@ const errorr = (log: any) => {
                 {
                     data: log,
                     time: new Date(),
-                    type: 'log',
+                    type: 'error',
                 },
             ],
         };
@@ -33,5 +33,5 @@ const errorr = (log: any) => {
 
 export default Object.assign(console, {
     log,
-    errorr,
+    error,
 });

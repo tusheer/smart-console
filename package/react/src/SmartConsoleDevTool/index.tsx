@@ -20,7 +20,9 @@ const SmartConsoleDevTools = () => {
                     {logs.map((value, index) => {
                         return (
                             <List key={index}>
-                                <LogStatus> {value.type} </LogStatus>
+                                <LogStatus status={value.type}>
+                                    {value.type}
+                                </LogStatus>
                                 <LogBody> {JSON.stringify(value.data)}</LogBody>
                             </List>
                         );

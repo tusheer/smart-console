@@ -2,8 +2,13 @@ import Console, { SmartConsoleDevtool } from '@smart-console/react';
 import React from 'react';
 
 const App = () => {
-    const handelValue = () => {
-        Console.log({ tusher: 'Hi', age: 4, name: 'tusher' });
+    const handelValue = async () => {
+        fetch('https://bible-api.com/romans+12:1-2').then((data) =>
+            data.json().then((data) => {
+                Console.log(data);
+            })
+        );
+        Console.error('Tusher');
     };
 
     return (
