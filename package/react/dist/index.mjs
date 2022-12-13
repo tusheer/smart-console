@@ -1,9 +1,9 @@
 import { useState, useEffect, useSyncExternalStore, useCallback } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { jsx, jsxs } from 'react/jsx-runtime';
-import s from '@emotion/styled';
+import i from '@emotion/styled';
 
-var v={color:{primary:"#161b22","grey:300":"#f2f2f2f2"}},C=t=>jsx(ThemeProvider,{theme:v,children:t.children}),l=C;var c={logs:[]},k=t=>{let e=t,a=()=>e,o=new Set;return {getState:a,setState:i=>{e={...e,...i(e)},o.forEach(h=>h());},subscribe:i=>(o.add(i),()=>o.delete(i))}},r=k(c),d=t=>useSyncExternalStore(r.subscribe,useCallback(()=>t(r.getState()),[]),()=>t(c));var m=s.div`
+var C={color:{primary:"#161b22","grey:300":"#f2f2f2f2"}},L=t=>jsx(ThemeProvider,{theme:C,children:t.children}),c=L;var m={logs:[]},P=t=>{let e=t,s=()=>e,o=new Set;return {getState:s,setState:n=>{e={...e,...n(e)},o.forEach(h=>h());},subscribe:n=>(o.add(n),()=>o.delete(n))}},r=P(m),f=t=>useSyncExternalStore(r.subscribe,useCallback(()=>t(r.getState()),[]),()=>t(m));var d=i.div`
     font-family: 'system-ui' !important;
     padding: 0px;
     background: ${t=>t.theme.color.primary};
@@ -16,29 +16,30 @@ var v={color:{primary:"#161b22","grey:300":"#f2f2f2f2"}},C=t=>jsx(ThemeProvider,
     border-top: 1px solid white;
     margin: 0;
     overflow-y: auto;
-`,f=s.ul`
+`,g=i.ul`
     padding: 0;
     margin: 0;
-`,g=s.li`
+`,u=i.li`
     color: ${t=>t.theme.color.primary};
     background: #fffffc10;
     border-bottom: 1px solid #ffffff15;
     display: flex;
-    &:hover {
-        color: green;
-    }
-`,u=s.div`
+`,S=i.div`
+    min-height: 25px;
     boxsizing: border-box;
-    border-left: 2px solid #c9f236;
-    /* color: red; */
-    width: 50px;
+    color: trasparent;
+    min-width: 50px;
     padding: 2px 4px;
-    font-size: 16px;
-    texttransform: uppercase;
-`,S=s.div`
+    background: #ffc107;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    text-transform: uppercase;
+`,x=i.div`
     padding: 2px 2px;
-    color: red;
-`;var D=()=>{let[t,e]=useState(!0),a=d(o=>o.logs);return useEffect(()=>{e(!1);},[]),t?null:jsx(l,{children:jsx(m,{children:jsx(f,{"data-testid":"ul",children:a.map((o,p)=>jsxs(g,{children:[jsxs(u,{children:[" ",o.type," "]}),jsx(S,{children:o.data})]},p))})})})},F=D;var I={},E=t=>{r.setState(e=>({logs:[...e.logs,{data:t,time:new Date,type:"log"}]}));},R=t=>{r.setState(e=>({logs:[...e.logs,{data:t,time:new Date,type:"log"}]}));},y=Object.assign(I,{log:E,errorr:R});var _=y;
+    color: white;
+`;var D=()=>{let[t,e]=useState(!0),s=f(o=>o.logs);return useEffect(()=>{e(!1);},[]),t?null:jsx(c,{children:jsx(d,{children:jsx(g,{"data-testid":"ul",children:s.map((o,l)=>jsxs(u,{children:[jsxs(S,{children:[" ",o.type," "]}),jsxs(x,{children:[" ",JSON.stringify(o.data)]})]},l))})})})},F=D;var I={},E=t=>{r.setState(e=>({logs:[...e.logs,{data:t,time:new Date,type:"log"}]}));},R=t=>{r.setState(e=>({logs:[...e.logs,{data:t,time:new Date,type:"log"}]}));},y=Object.assign(I,{log:E,errorr:R});var _=y;
 
 export { F as SmartConsoleDevtool, _ as default };
 //# sourceMappingURL=out.js.map

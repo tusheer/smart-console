@@ -2,7 +2,7 @@ import { store } from '../store';
 
 const console = {};
 
-const log = (log: string) => {
+const log = (log: any) => {
     store.setState((value) => {
         return {
             logs: [
@@ -16,7 +16,7 @@ const log = (log: string) => {
         };
     });
 };
-const errorr = (log: string) => {
+const errorr = (log: any) => {
     store.setState((value) => {
         return {
             logs: [

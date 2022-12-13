@@ -25,22 +25,23 @@ export const List = styled.li`
     background: #fffffc10;
     border-bottom: 1px solid #ffffff15;
     display: flex;
-    &:hover {
-        color: green;
-    }
 `;
 
 export const LogStatus = styled.div`
+    min-height: 25px;
     boxsizing: border-box;
-    border-left: 2px solid #c9f236;
-    /* color: red; */
-    width: 50px;
+    color: trasparent;
+    min-width: 50px;
     padding: 2px 4px;
-    font-size: 16px;
-    texttransform: uppercase;
+    background: #ffc107;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    text-transform: uppercase;
 `;
 
 export const LogBody = styled.div`
     padding: 2px 2px;
-    color: red;
+    color: white;
 `;

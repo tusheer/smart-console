@@ -3,7 +3,7 @@ import React from 'react';
 
 const App = () => {
     const handelValue = () => {
-        Console.log('hi');
+        Console.log({ tusher: 'Hi', age: 4, name: 'tusher' });
     };
 
     return (

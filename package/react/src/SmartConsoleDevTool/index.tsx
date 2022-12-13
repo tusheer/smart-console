@@ -21,7 +21,7 @@ const SmartConsoleDevTools = () => {
                         return (
                             <List key={index}>
                                 <LogStatus> {value.type} </LogStatus>
-                                <LogBody>{value.data}</LogBody>
+                                <LogBody> {JSON.stringify(value.data)}</LogBody>
                             </List>
                         );
                     })}
