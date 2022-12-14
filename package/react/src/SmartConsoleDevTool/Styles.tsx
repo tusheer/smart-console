@@ -12,15 +12,20 @@ export const Container = styled.div`
     height: 300px;
     border-top: 1px solid white;
     margin: 0;
-    overflow-y: auto;
+    display: flex;
 `;
 
 export const ListContainer = styled.ul`
     padding: 0;
     margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
 `;
 
 export const List = styled.li`
+    width: 100%;
+    cursor: pointer;
     color: ${(props) => props.theme.color.primary};
     background: #fffffc10;
     border-bottom: 1px solid #ffffff15;
@@ -46,4 +51,15 @@ export const LogStatus = styled.div<{
 export const LogBody = styled.div`
     padding: 4px 5px;
     color: white;
+    width: 100%;
+`;
+
+export const LogDetails = styled.div`
+    width: 400px;
+    height: 100%;
+    overflow-y: auto;
+    flex-shrink: 0;
+    border-left: 1px solid #ffffff15;
+    padding: 12px;
+    background: #161b22;
 `;

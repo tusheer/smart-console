@@ -1,15 +1,26 @@
 import { useEffect, useState } from 'react';
 import ThemeProvider from './ThemeProvider';
-import { useStore } from '../store';
-import { Container, List, ListContainer, LogBody, LogStatus } from './Styles';
+import { Log, useStore } from '../store';
+import {
+    Container,
+    List,
+    ListContainer,
+    LogBody,
+    LogDetails,
+    LogStatus,
+} from './Styles';
 
 const SmartConsoleDevTools = () => {
     const [isSsr, setIsSsr] = useState(true);
     const logs = useStore((sate) => sate.logs);
 
+    const [selectedLog, setSelectedLog] = useState<null | Log>(null);
+
     useEffect(() => {
         setIsSsr(false);
     }, []);
+
+    const handleSelectLog = (log: Log) => () => setSelectedLog(log);
 
     if (isSsr) return null;
 
@@ -19,7 +30,7 @@ const SmartConsoleDevTools = () => {
                 <ListContainer data-testid="ul">
                     {logs.map((value, index) => {
                         return (
-                            <List key={index}>
+                            <List onClick={handleSelectLog(value)} key={index}>
                                 <LogStatus status={value.type}>
                                     {value.type}
                                 </LogStatus>
@@ -28,6 +39,9 @@ const SmartConsoleDevTools = () => {
                         );
                     })}
                 </ListContainer>
+                {selectedLog ? (
+                    <LogDetails>{JSON.stringify(selectedLog)}</LogDetails>
+                ) : null}
             </Container>
         </ThemeProvider>
     );
