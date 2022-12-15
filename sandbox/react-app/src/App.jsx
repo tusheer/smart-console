@@ -3,12 +3,12 @@ import React from 'react';
 
 const App = () => {
     const handelValue = async () => {
-        fetch('https://bible-api.com/romans+12:1-2').then((data) =>
-            data.json().then((data) => {
-                Console.log(data);
-            })
-        );
-        Console.error('Tusher');
+        // fetch('https://bible-api.com/romans+12:1-2').then((data) =>
+        //     data.json().then((data) => {
+        //         Console.log(data);
+        //     })
+        // );
+        Console.log('console.log(hello)');
     };
 
     return (

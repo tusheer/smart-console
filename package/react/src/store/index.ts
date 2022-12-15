@@ -4,8 +4,10 @@ type Store = typeof initialStore;
 type CallBackFunction<S> = (v: Store) => S;
 type SetStoreCallback = (value: Store) => Partial<Store>;
 
+export type LogType = 'error' | 'log' | 'success' | 'info' | 'describe';
+
 export type Log = {
-    type: 'error' | 'log' | 'success' | 'info' | 'describe';
+    type: LogType;
     data: any;
     time: Date;
 };

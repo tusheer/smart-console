@@ -1,37 +1,28 @@
-import { store } from '../store';
+import { LogType, store } from '../store';
 
-const console = {};
+class Console {
+    private setState(log: any, type: LogType) {
+        store.setState((value) => {
+            return {
+                logs: [
+                    ...value.logs,
+                    {
+                        data: log,
+                        time: new Date(),
+                        type: type,
+                    },
+                ],
+            };
+        });
+    }
 
-const log = (log: any) => {
-    store.setState((value) => {
-        return {
-            logs: [
-                ...value.logs,
-                {
-                    data: log,
-                    time: new Date(),
-                    type: 'log',
-                },
-            ],
-        };
-    });
-};
-const error = (log: any) => {
-    store.setState((value) => {
-        return {
-            logs: [
-                ...value.logs,
-                {
-                    data: log,
-                    time: new Date(),
-                    type: 'error',
-                },
-            ],
-        };
-    });
-};
+    log(log: any) {
+        this.setState(log, 'log');
+    }
 
-export default Object.assign(console, {
-    log,
-    error,
-});
+    error(log: any) {
+        this.setState(log, 'error');
+    }
+}
+
+export default new Console();

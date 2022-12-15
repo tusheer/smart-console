@@ -34,7 +34,9 @@ const SmartConsoleDevTools = () => {
                                 <LogStatus status={value.type}>
                                     {value.type}
                                 </LogStatus>
-                                <LogBody> {JSON.stringify(value.data)}</LogBody>
+                                <LogBody>
+                                    <code>{value.data}</code>
+                                </LogBody>
                             </List>
                         );
                     })}
