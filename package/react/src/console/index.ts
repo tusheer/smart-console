@@ -1,7 +1,7 @@
 import { LogType, store } from '../store';
 
 class Console {
-    private setState(log: any, type: LogType) {
+    #setState(log: any, type: LogType) {
         store.setState((value) => {
             return {
                 logs: [
@@ -17,11 +17,11 @@ class Console {
     }
 
     log(log: any) {
-        this.setState(log, 'log');
+        this.#setState(log, 'log');
     }
 
     error(log: any) {
-        this.setState(log, 'error');
+        this.#setState(log, 'error');
     }
 }
 

@@ -1,8 +1,10 @@
 declare const SmartConsoleDevTools: () => JSX.Element | null;
 
-declare const _default: {
-    log: (log: any) => void;
-    error: (log: any) => void;
-};
+declare class Console {
+    #private;
+    log(log: any): void;
+    error(log: any): void;
+}
+declare const _default: Console;
 
 export { SmartConsoleDevTools as SmartConsoleDevtool, _default as default };

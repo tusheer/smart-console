@@ -1,12 +1,11 @@
 import Console, { SmartConsoleDevtool } from '@smart-console/react';
 
 export default function Web() {
-    console.log('hi');
+    Console.error('this is new console');
 
-    Console.errorr('this is new console');
     return (
         <div>
-            <h1 onClick={() => Console.errorr('test')}>Web</h1>
+            <h1 onClick={() => Console.error('test')}>Web</h1>
             <SmartConsoleDevtool />
         </div>
     );
