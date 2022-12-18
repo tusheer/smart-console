@@ -26,11 +26,16 @@ function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
         setIsMouseDown(false);
     }, []);
 
-    const handleMouseMove = useCallback(() => {
-        if (isMouseDown) {
-            console.log(ref);
-        }
-    }, [isMouseDown]);
+    const handleMouseMove = useCallback(
+        (event: MouseEvent) => {
+            if (isMouseDown) {
+                setMouseMove(
+                    position === 'top-bottom' ? event.pageY : event.pageX
+                );
+            }
+        },
+        [isMouseDown]
+    );
 
     useEffect(() => {
         window.addEventListener('mousemove', handleMouseMove);
@@ -38,7 +43,7 @@ function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
         };
-    }, [ref.current]);
+    }, [isMouseDown]);
 
     useEffect(() => {
         setMouseMove(0);

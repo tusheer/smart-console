@@ -32,7 +32,13 @@ const SmartConsoleDevTools = () => {
 
     return (
         <ThemeProvider>
-            <Container style={{ height: `${300 + mouseMove}px ` }}>
+            <Container
+                style={{
+                    height:
+                        mouseMove !== 0
+                            ? `${window.innerHeight - mouseMove}px`
+                            : '300px',
+                }}>
                 <div
                     {...props}
                     style={{
