@@ -18,23 +18,23 @@ const SmartConsoleDevTools = () => {
 
     const [selectedLog, setSelectedLog] = useState<null | Log>(null);
 
+    const { mouseMove, props } = useWindowResize({
+        position: 'top-bottom',
+    });
+
     useEffect(() => {
         setIsSsr(false);
     }, []);
 
     const handleSelectLog = (log: Log) => () => setSelectedLog(log);
 
-    const { ref } = useWindowResize({
-        position: 'top-bottom',
-    });
-
     if (isSsr) return null;
 
     return (
         <ThemeProvider>
-            <Container>
+            <Container style={{ height: `${300 + mouseMove}px ` }}>
                 <div
-                    ref={ref}
+                    {...props}
                     style={{
                         width: '100%',
                         height: '1px',

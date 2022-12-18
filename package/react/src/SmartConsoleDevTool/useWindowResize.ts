@@ -5,8 +5,12 @@ type ResizePerameterType = {
 };
 
 type ResizeReturnType = {
-    ref: RefObject<HTMLDivElement> | null;
     mouseMove: number;
+    props: {
+        ref: RefObject<HTMLDivElement> | null;
+        onMouseDown: () => void;
+        onMouseUp: () => void;
+    };
 };
 
 function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
@@ -23,30 +27,30 @@ function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
     }, []);
 
     const handleMouseMove = useCallback(() => {
-        console.log('mouse move');
-    }, []);
-
-    console.log(ref);
+        if (isMouseDown) {
+            console.log(ref);
+        }
+    }, [isMouseDown]);
 
     useEffect(() => {
-        console.log(ref.current);
-        if (ref.current === null) return;
-        const element = ref.current;
-
-        element.addEventListener('mousedown', handleMouseDown);
-        element.addEventListener('mouseup', handleMouseUp);
         window.addEventListener('mousemove', handleMouseMove);
 
         return () => {
-            element.removeEventListener('mousedown', handleMouseDown);
-            element.removeEventListener('mouseup', handleMouseUp);
             window.removeEventListener('mousemove', handleMouseMove);
         };
     }, [ref.current]);
 
+    useEffect(() => {
+        setMouseMove(0);
+    }, []);
+
     return {
-        ref,
         mouseMove,
+        props: {
+            onMouseUp: handleMouseUp,
+            onMouseDown: handleMouseDown,
+            ref,
+        },
     };
 }
 
