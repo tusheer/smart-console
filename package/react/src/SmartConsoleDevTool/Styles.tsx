@@ -10,7 +10,6 @@ export const Container = styled.div`
     left: 0;
     right: 0;
     height: 300px;
-    border-top: 1px solid white;
     margin: 0;
 `;
 

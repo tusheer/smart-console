@@ -10,7 +10,7 @@ import {
     LogDetails,
     LogStatus,
 } from './Styles';
-import useResize from './useResize';
+import useWindowResize from './useWindowResize';
 
 const SmartConsoleDevTools = () => {
     const [isSsr, setIsSsr] = useState(true);
@@ -24,7 +24,7 @@ const SmartConsoleDevTools = () => {
 
     const handleSelectLog = (log: Log) => () => setSelectedLog(log);
 
-    const { ref } = useResize({
+    const { ref } = useWindowResize({
         position: 'top-bottom',
     });
 
@@ -32,13 +32,14 @@ const SmartConsoleDevTools = () => {
 
     return (
         <ThemeProvider>
-            <Container ref={ref}>
+            <Container>
                 <div
+                    ref={ref}
                     style={{
                         width: '100%',
                         height: '1px',
-                        background: 'red',
-                        cursor: 'e-resize',
+                        background: 'white',
+                        cursor: 'row-resize',
                     }}></div>
                 <ListWraper>
                     <ListContainer data-testid="ul">
