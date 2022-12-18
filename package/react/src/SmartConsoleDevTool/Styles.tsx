@@ -12,6 +12,9 @@ export const Container = styled.div`
     height: 300px;
     border-top: 1px solid white;
     margin: 0;
+`;
+
+export const ListWraper = styled.div`
     display: flex;
 `;
 

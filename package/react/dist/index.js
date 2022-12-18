@@ -7,7 +7,7 @@ var react$1 = require('@emotion/react');
 var jsxRuntime = require('react/jsx-runtime');
 var s = require('@emotion/styled');
 
-var D=(e,t,r)=>{if(!t.has(e))throw TypeError("Cannot "+r)};var u=(e,t,r)=>{if(t.has(e))throw TypeError("Cannot add the same private member more than once");t instanceof WeakSet?t.add(e):t.set(e,r);};var c=(e,t,r)=>(D(e,t,"access private method"),r);var F={color:{primary:"#161b22",log:"#ffc107",error:"#ed4337",info:"",describe:"",success:""}},I=e=>jsxRuntime.jsx(react$1.ThemeProvider,{theme:F,children:e.children}),x=I;var h={logs:[]},$=e=>{let t=e,r=()=>t,i=new Set;return {getState:r,setState:o=>{t={...t,...o(t)},i.forEach(p=>p());},subscribe:o=>(i.add(o),()=>i.delete(o))}},l=$(h),y=e=>react.useSyncExternalStore(l.subscribe,react.useCallback(()=>e(l.getState()),[]),()=>e(h));var S=s.div`
+var I=Object.defineProperty;var h=Object.getOwnPropertySymbols;var V=Object.prototype.hasOwnProperty,O=Object.prototype.propertyIsEnumerable;var x=(e,t,o)=>t in e?I(e,t,{enumerable:!0,configurable:!0,writable:!0,value:o}):e[t]=o,c=(e,t)=>{for(var o in t||(t={}))V.call(t,o)&&x(e,o,t[o]);if(h)for(var o of h(t))O.call(t,o)&&x(e,o,t[o]);return e};var W=(e,t,o)=>{if(!t.has(e))throw TypeError("Cannot "+o)};var S=(e,t,o)=>{if(t.has(e))throw TypeError("Cannot add the same private member more than once");t instanceof WeakSet?t.add(e):t.set(e,o);};var d=(e,t,o)=>(W(e,t,"access private method"),o);var H={color:{primary:"#161b22",log:"#ffc107",error:"#ed4337",info:"",describe:"",success:""}},M=e=>jsxRuntime.jsx(react$1.ThemeProvider,{theme:H,children:e.children}),L=M;var b={logs:[]},q=e=>{let t=e,o=()=>t,i=new Set;return {getState:o,setState:a=>{t=c(c({},t),a(t)),i.forEach(r=>r());},subscribe:a=>(i.add(a),()=>i.delete(a))}},l=q(b),T=e=>react.useSyncExternalStore(l.subscribe,react.useCallback(()=>e(l.getState()),[]),()=>e(b));var v=s.div`
     font-family: 'system-ui' !important;
     padding: 0px;
     background: ${e=>e.theme.color.primary};
@@ -19,21 +19,22 @@ var D=(e,t,r)=>{if(!t.has(e))throw TypeError("Cannot "+r)};var u=(e,t,r)=>{if(t.
     height: 300px;
     border-top: 1px solid white;
     margin: 0;
+`,w=s.div`
     display: flex;
-`,L=s.ul`
+`,R=s.ul`
     padding: 0;
     margin: 0;
     height: 100%;
     width: 100%;
     overflow-y: auto;
-`,b=s.li`
+`,C=s.li`
     width: 100%;
     cursor: pointer;
     color: ${e=>e.theme.color.primary};
     background: #fffffc10;
     border-bottom: 1px solid #ffffff15;
     display: flex;
-`,T=s.div`
+`,k=s.div`
     min-height: 25px;
     boxsizing: border-box;
     color: trasparent;
@@ -45,11 +46,11 @@ var D=(e,t,r)=>{if(!t.has(e))throw TypeError("Cannot "+r)};var u=(e,t,r)=>{if(t.
     align-items: center;
     font-weight: 600;
     text-transform: uppercase;
-`,w=s.div`
+`,P=s.div`
     padding: 4px 5px;
     color: white;
     width: 100%;
-`,C=s.div`
+`,z=s.div`
     width: 400px;
     height: 100%;
     overflow-y: auto;
@@ -57,9 +58,9 @@ var D=(e,t,r)=>{if(!t.has(e))throw TypeError("Cannot "+r)};var u=(e,t,r)=>{if(t.
     border-left: 1px solid #ffffff15;
     padding: 12px;
     background: #161b22;
-`;var J=()=>{let[e,t]=react.useState(!0),r=y(o=>o.logs),[i,m]=react.useState(null);react.useEffect(()=>{t(!1);},[]);let g=o=>()=>m(o);return e?null:jsxRuntime.jsx(x,{children:jsxRuntime.jsxs(S,{children:[jsxRuntime.jsx(L,{"data-testid":"ul",children:r.map((o,p)=>jsxRuntime.jsxs(b,{onClick:g(o),children:[jsxRuntime.jsx(T,{status:o.type,children:o.type}),jsxRuntime.jsx(w,{children:jsxRuntime.jsx("code",{children:o.data})})]},p))}),i?jsxRuntime.jsx(C,{children:JSON.stringify(i)}):null]})})},N=J;var a,f,d=class{constructor(){u(this,a);}log(t){c(this,a,f).call(this,t,"log");}error(t){c(this,a,f).call(this,t,"error");}};a=new WeakSet,f=function(t,r){l.setState(i=>({logs:[...i.logs,{data:t,time:new Date,type:r}]}));};var P=new d;var ne=P;
+`;function G({position:e}){return {ref:react.useRef(null)}}var D=G;var Q=()=>{let[e,t]=react.useState(!0),o=T(r=>r.logs),[i,g]=react.useState(null);react.useEffect(()=>{t(!1);},[]);let y=r=>()=>g(r),{ref:a}=D({position:"top-bottom"});return e?null:jsxRuntime.jsx(L,{children:jsxRuntime.jsxs(v,{ref:a,children:[jsxRuntime.jsx("div",{style:{width:"100%",height:"1px",background:"red",cursor:"e-resize"}}),jsxRuntime.jsxs(w,{children:[jsxRuntime.jsx(R,{"data-testid":"ul",children:o.map((r,F)=>jsxRuntime.jsxs(C,{onClick:y(r),children:[jsxRuntime.jsx(k,{status:r.type,children:r.type}),jsxRuntime.jsx(P,{children:jsxRuntime.jsx("code",{children:r.data})})]},F))}),i?jsxRuntime.jsx(z,{children:JSON.stringify(i)}):null]})]})})},U=Q;var p,u,m=class{constructor(){S(this,p);}log(t){d(this,p,u).call(this,t,"log");}error(t){d(this,p,u).call(this,t,"error");}};p=new WeakSet,u=function(t,o){l.setState(i=>({logs:[...i.logs,{data:t,time:new Date,type:o}]}));};var B=new m;var Te=B;
 
-exports.SmartConsoleDevtool = N;
-exports.default = ne;
+exports.SmartConsoleDevtool = U;
+exports.default = Te;
 //# sourceMappingURL=out.js.map
 //# sourceMappingURL=index.js.map
