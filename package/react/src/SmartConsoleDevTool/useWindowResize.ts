@@ -1,7 +1,7 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 type ResizePerameterType = {
-    position: 'left-right' | 'top-bottom';
+    position: 'horizontal' | 'vertical';
 };
 
 type ResizeReturnType = {
@@ -9,7 +9,6 @@ type ResizeReturnType = {
     props: {
         ref: RefObject<HTMLDivElement> | null;
         onMouseDown: () => void;
-        onMouseUp: () => void;
     };
 };
 
@@ -17,7 +16,6 @@ function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
     const [mouseMove, setMouseMove] = useState<number | null>(null);
     const [isMouseDown, setIsMouseDown] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
-    // const [isMouse]
 
     const handleMouseDown = useCallback(() => {
         setIsMouseDown(true);
@@ -31,7 +29,7 @@ function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
         (event: MouseEvent) => {
             if (isMouseDown) {
                 setMouseMove(
-                    position === 'top-bottom' ? event.pageY : event.pageX
+                    position === 'vertical' ? event.pageY : event.pageX
                 );
             }
         },
@@ -41,16 +39,17 @@ function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
     useEffect(() => {
         if (isMouseDown) {
             window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('mouseup', handleMouseUp);
         }
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
         };
     }, [isMouseDown]);
 
     return {
         mouseMove,
         props: {
-            onMouseUp: handleMouseUp,
             onMouseDown: handleMouseDown,
             ref,
         },

@@ -19,12 +19,12 @@ const SmartConsoleDevTools = () => {
     const [selectedLog, setSelectedLog] = useState<null | Log>(null);
 
     const { mouseMove, props } = useWindowResize({
-        position: 'top-bottom',
+        position: 'vertical',
     });
 
     const { mouseMove: logDetailsMouseMove, props: logDetailsProps } =
         useWindowResize({
-            position: 'left-right',
+            position: 'horizontal',
         });
 
     useEffect(() => {
