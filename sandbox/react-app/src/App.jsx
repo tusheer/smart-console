@@ -9,6 +9,8 @@ const App = () => {
         //     })
         // );
         Console.log('console.log(hello)');
+
+        Console.error('Error Test');
     };
 
     return (

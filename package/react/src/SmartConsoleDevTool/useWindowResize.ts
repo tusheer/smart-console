@@ -13,7 +13,10 @@ type ResizeReturnType = {
 };
 
 function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
-    const [mouseMove, setMouseMove] = useState<number | null>(null);
+    const [mouseMove, setMouseMove] = useState<number | null>(
+        Number(localStorage.getItem(`smart-devtool-resize-${position}`)) || null
+    );
+
     const [isMouseDown, setIsMouseDown] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
@@ -37,13 +40,23 @@ function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
     );
 
     useEffect(() => {
+        let timeout: ReturnType<typeof setTimeout> | undefined;
+
         if (isMouseDown) {
             window.addEventListener('mousemove', handleMouseMove);
             window.addEventListener('mouseup', handleMouseUp);
         }
+
+        timeout = setTimeout(() => {
+            localStorage.setItem(
+                `smart-devtool-resize-${position}`,
+                String(mouseMove === null ? '' : mouseMove)
+            );
+        }, 700);
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('mouseup', handleMouseUp);
+            clearTimeout(timeout);
         };
     }, [isMouseDown]);
 
