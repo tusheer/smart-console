@@ -15,6 +15,7 @@ export const Container = styled.div`
 
 export const ListWraper = styled.div`
     display: flex;
+    height: 100%;
 `;
 
 export const ListContainer = styled.ul`
@@ -57,11 +58,13 @@ export const LogBody = styled.div`
 `;
 
 export const LogDetails = styled.div`
+    /* background: red; */
     width: 400px;
+    display: flex;
     height: 100%;
     overflow-y: auto;
     flex-shrink: 0;
-    border-left: 1px solid #ffffff15;
     padding: 12px;
+    position: relative;
     background: #161b22;
 `;

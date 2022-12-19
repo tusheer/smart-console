@@ -22,6 +22,11 @@ const SmartConsoleDevTools = () => {
         position: 'top-bottom',
     });
 
+    const { mouseMove: logDetailsMouseMove, props: logDetailsProps } =
+        useWindowResize({
+            position: 'left-right',
+        });
+
     useEffect(() => {
         setIsSsr(false);
     }, []);
@@ -35,7 +40,7 @@ const SmartConsoleDevTools = () => {
             <Container
                 style={{
                     height:
-                        mouseMove !== 0
+                        mouseMove !== null
                             ? `${window.innerHeight - mouseMove}px`
                             : '300px',
                 }}>
@@ -43,7 +48,7 @@ const SmartConsoleDevTools = () => {
                     {...props}
                     style={{
                         width: '100%',
-                        height: '1px',
+                        height: '2px',
                         background: 'white',
                         cursor: 'row-resize',
                     }}></div>
@@ -65,7 +70,26 @@ const SmartConsoleDevTools = () => {
                         })}
                     </ListContainer>
                     {selectedLog ? (
-                        <LogDetails>{JSON.stringify(selectedLog)}</LogDetails>
+                        <LogDetails
+                            style={{
+                                width:
+                                    mouseMove !== null
+                                        ? `${logDetailsMouseMove}px`
+                                        : '400px',
+                            }}>
+                            <div
+                                {...logDetailsProps}
+                                style={{
+                                    height: '100%',
+                                    width: '2px',
+                                    background: '#ffffff15',
+                                    position: 'absolute',
+                                    left: '0',
+                                    top: '0',
+                                    cursor: 'ew-resize',
+                                }}></div>
+                            {JSON.stringify(selectedLog)}
+                        </LogDetails>
                     ) : null}
                 </ListWraper>
             </Container>
