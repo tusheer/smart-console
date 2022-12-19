@@ -58,13 +58,11 @@ export const LogBody = styled.div`
 `;
 
 export const LogDetails = styled.div`
-    /* background: red; */
     width: 400px;
     display: flex;
     height: 100%;
     overflow-y: auto;
     flex-shrink: 0;
-    padding: 12px;
     position: relative;
     background: #161b22;
 `;

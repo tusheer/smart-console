@@ -17,6 +17,7 @@ function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
     const [mouseMove, setMouseMove] = useState<number | null>(null);
     const [isMouseDown, setIsMouseDown] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
+    // const [isMouse]
 
     const handleMouseDown = useCallback(() => {
         setIsMouseDown(true);
@@ -38,8 +39,9 @@ function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
     );
 
     useEffect(() => {
-        window.addEventListener('mousemove', handleMouseMove);
-
+        if (isMouseDown) {
+            window.addEventListener('mousemove', handleMouseMove);
+        }
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
         };

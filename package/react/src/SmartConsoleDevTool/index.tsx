@@ -73,8 +73,11 @@ const SmartConsoleDevTools = () => {
                         <LogDetails
                             style={{
                                 width:
-                                    mouseMove !== null
-                                        ? `${logDetailsMouseMove}px`
+                                    logDetailsMouseMove !== null
+                                        ? `${
+                                              window.innerWidth -
+                                              logDetailsMouseMove
+                                          }px`
                                         : '400px',
                             }}>
                             <div
@@ -83,9 +86,6 @@ const SmartConsoleDevTools = () => {
                                     height: '100%',
                                     width: '2px',
                                     background: '#ffffff15',
-                                    position: 'absolute',
-                                    left: '0',
-                                    top: '0',
                                     cursor: 'ew-resize',
                                 }}></div>
                             {JSON.stringify(selectedLog)}
