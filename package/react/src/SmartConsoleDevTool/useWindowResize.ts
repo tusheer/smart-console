@@ -12,9 +12,16 @@ type ResizeReturnType = {
     };
 };
 
+function getLocalStorageValue(position: ResizePerameterType['position']) {
+    return typeof window !== 'undefined'
+        ? Number(localStorage.getItem(`smart-devtool-resize-${position}`)) ||
+              null
+        : null;
+}
+
 function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
     const [mouseMove, setMouseMove] = useState<number | null>(
-        Number(localStorage.getItem(`smart-devtool-resize-${position}`)) || null
+        getLocalStorageValue(position)
     );
 
     const [isMouseDown, setIsMouseDown] = useState(false);
