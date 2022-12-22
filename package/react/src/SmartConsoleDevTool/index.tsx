@@ -3,12 +3,14 @@ import ThemeProvider from './ThemeProvider';
 import { Log, useStore } from '../store';
 import {
     Container,
+    HorizontalResizeBar,
     List,
     ListContainer,
     ListWraper,
     LogBody,
     LogDetails,
     LogStatus,
+    VarticalResizeBar,
 } from './Styles';
 import useWindowResize from './useWindowResize';
 
@@ -37,21 +39,8 @@ const SmartConsoleDevTools = () => {
 
     return (
         <ThemeProvider>
-            <Container
-                style={{
-                    height:
-                        mouseMove !== null
-                            ? `${window.innerHeight - mouseMove}px`
-                            : '300px',
-                }}>
-                <div
-                    {...props}
-                    style={{
-                        width: '100%',
-                        height: '2px',
-                        background: 'white',
-                        cursor: 'row-resize',
-                    }}></div>
+            <Container varticalHeight={mouseMove}>
+                <VarticalResizeBar {...props} />
                 <ListWraper>
                     <ListContainer data-testid="ul">
                         {logs.map((value, index) => {
@@ -70,24 +59,8 @@ const SmartConsoleDevTools = () => {
                         })}
                     </ListContainer>
                     {selectedLog ? (
-                        <LogDetails
-                            style={{
-                                width:
-                                    logDetailsMouseMove !== null
-                                        ? `${
-                                              window.innerWidth -
-                                              logDetailsMouseMove
-                                          }px`
-                                        : '400px',
-                            }}>
-                            <div
-                                {...logDetailsProps}
-                                style={{
-                                    height: '100%',
-                                    width: '2px',
-                                    background: '#ffffff15',
-                                    cursor: 'ew-resize',
-                                }}></div>
+                        <LogDetails horizontalWidth={logDetailsMouseMove}>
+                            <HorizontalResizeBar {...logDetailsProps} />
                             {JSON.stringify(selectedLog)}
                         </LogDetails>
                     ) : null}

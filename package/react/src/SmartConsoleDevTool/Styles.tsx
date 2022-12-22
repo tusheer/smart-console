@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const Container = styled.div`
+export const Container = styled.div<{ varticalHeight: number | null }>`
     font-family: 'system-ui' !important;
     padding: 0px;
     background: ${(props) => props.theme.color.primary};
@@ -9,7 +9,10 @@ export const Container = styled.div`
     bottom: 0;
     left: 0;
     right: 0;
-    height: 300px;
+    height: ${(props) =>
+        props.varticalHeight !== null
+            ? window.innerHeight - props.varticalHeight + 'px'
+            : '300px'};
     margin: 0;
 `;
 
@@ -57,12 +60,29 @@ export const LogBody = styled.div`
     width: 100%;
 `;
 
-export const LogDetails = styled.div`
-    width: 400px;
+export const LogDetails = styled.div<{ horizontalWidth: number | null }>`
+    width: ${(props) =>
+        props.horizontalWidth !== null
+            ? window.innerWidth - props.horizontalWidth + 'px'
+            : '400px'};
     display: flex;
     height: 100%;
     overflow-y: auto;
     flex-shrink: 0;
     position: relative;
     background: #161b22;
+`;
+
+export const VarticalResizeBar = styled.div`
+    width: 100%;
+    height: 2px;
+    background: white;
+    cursor: row-resize;
+`;
+
+export const HorizontalResizeBar = styled.div`
+    height: 100%;
+    width: 2px;
+    background: #ffffff15;
+    cursor: ew-resize;
 `;
