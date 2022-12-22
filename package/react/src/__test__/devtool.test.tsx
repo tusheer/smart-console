@@ -4,7 +4,7 @@ import SmartConsoleDevTool from '../SmartConsoleDevTool';
 import Console from '../console';
 
 describe('Render smart devtool devtool', () => {
-    it('should reder', async () => {
+    it('should render', async () => {
         const container = render(<SmartConsoleDevTool />);
         await Console.log('Hello');
         await Console.log('HI');
