@@ -20,14 +20,16 @@ const SmartConsoleDevTools = () => {
 
     const [selectedLog, setSelectedLog] = useState<null | Log>(null);
 
-    const { mouseMove, props } = useWindowResize({
+    const { mouseMove, getResizeProps } = useWindowResize({
         position: 'vertical',
     });
 
-    const { mouseMove: logDetailsMouseMove, props: logDetailsProps } =
-        useWindowResize({
-            position: 'horizontal',
-        });
+    const {
+        mouseMove: logDetailsMouseMove,
+        getResizeProps: getHorigontalResizeProps,
+    } = useWindowResize({
+        position: 'horizontal',
+    });
 
     useEffect(() => {
         setIsSsr(false);
@@ -40,7 +42,7 @@ const SmartConsoleDevTools = () => {
     return (
         <ThemeProvider>
             <Container varticalHeight={mouseMove}>
-                <VarticalResizeBar {...props} />
+                <VarticalResizeBar {...getResizeProps()} />
                 <ListWraper>
                     <ListContainer data-testid="ul">
                         {logs.map((value, index) => {
@@ -60,7 +62,9 @@ const SmartConsoleDevTools = () => {
                     </ListContainer>
                     {selectedLog ? (
                         <LogDetails horizontalWidth={logDetailsMouseMove}>
-                            <HorizontalResizeBar {...logDetailsProps} />
+                            <HorizontalResizeBar
+                                {...getHorigontalResizeProps()}
+                            />
                             {JSON.stringify(selectedLog)}
                         </LogDetails>
                     ) : null}

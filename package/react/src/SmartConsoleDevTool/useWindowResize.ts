@@ -6,7 +6,7 @@ type ResizePerameterType = {
 
 type ResizeReturnType = {
     mouseMove: number | null;
-    props: {
+    getResizeProps: () => {
         ref: RefObject<HTMLDivElement> | null;
         onMouseDown: () => void;
     };
@@ -46,6 +46,13 @@ function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
         [isMouseDown]
     );
 
+    const getResizeProps = () => {
+        return {
+            onMouseDown: handleMouseDown,
+            ref,
+        };
+    };
+
     useEffect(() => {
         let timeout: ReturnType<typeof setTimeout> | undefined;
 
@@ -69,10 +76,7 @@ function useWindowResize({ position }: ResizePerameterType): ResizeReturnType {
 
     return {
         mouseMove,
-        props: {
-            onMouseDown: handleMouseDown,
-            ref,
-        },
+        getResizeProps,
     };
 }
 
