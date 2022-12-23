@@ -78,6 +78,7 @@ export const VarticalResizeBar = styled.div`
     height: 2px;
     background: white;
     cursor: row-resize;
+    user-select: none;
 `;
 
 export const HorizontalResizeBar = styled.div`
@@ -85,4 +86,5 @@ export const HorizontalResizeBar = styled.div`
     width: 2px;
     background: #ffffff15;
     cursor: ew-resize;
+    user-select: none;
 `;

@@ -63,11 +63,13 @@ var N=Object.defineProperty;var L=Object.getOwnPropertySymbols;var J=Object.prot
     height: 2px;
     background: white;
     cursor: row-resize;
+    user-select: none;
 `,I=s.div`
     height: 100%;
     width: 2px;
     background: #ffffff15;
     cursor: ew-resize;
+    user-select: none;
 `;function ee(e){return typeof window!="undefined"&&Number(localStorage.getItem(`smart-devtool-resize-${e}`))||null}function te({position:e}){let[t,o]=react.useState(ee(e)),[i,u]=react.useState(!1),d=react.useRef(null),n=react.useCallback(()=>{u(!0);},[]),l=react.useCallback(()=>{u(!1);},[]),m=react.useCallback(r=>{i&&o(e==="vertical"?r.pageY:r.pageX);},[i]),h=()=>({onMouseDown:n,ref:d});return react.useEffect(()=>{let r;return i&&(window.addEventListener("mousemove",m),window.addEventListener("mouseup",l)),r=setTimeout(()=>{localStorage.setItem(`smart-devtool-resize-${e}`,String(t===null?"":t));},700),()=>{window.removeEventListener("mousemove",m),window.removeEventListener("mouseup",l),clearTimeout(r);}},[i]),{mouseMove:t,getResizeProps:h}}var v=te;var re=()=>{let[e,t]=react.useState(!0),o=M(r=>r.logs),[i,u]=react.useState(null),{mouseMove:d,getResizeProps:n}=v({position:"vertical"}),{mouseMove:l,getResizeProps:m}=v({position:"horizontal"});react.useEffect(()=>{t(!1);},[]);let h=r=>()=>u(r);return e?null:jsxRuntime.jsx(T,{children:jsxRuntime.jsxs(P,{varticalHeight:d,children:[jsxRuntime.jsx(B,c({},n())),jsxRuntime.jsxs(C,{children:[jsxRuntime.jsx(D,{"data-testid":"ul",children:o.map((r,O)=>jsxRuntime.jsxs(k,{onClick:h(r),children:[jsxRuntime.jsx(E,{status:r.type,children:r.type}),jsxRuntime.jsx(H,{children:jsxRuntime.jsx("code",{children:r.data})})]},O))}),i?jsxRuntime.jsxs(W,{horizontalWidth:l,children:[jsxRuntime.jsx(I,c({},m())),JSON.stringify(i)]}):null]})]})})},ie=re;var p,w,S=class{constructor(){z(this,p);}log(t){y(this,p,w).call(this,t,"log");}error(t){y(this,p,w).call(this,t,"error");}};p=new WeakSet,w=function(t,o){f.setState(i=>({logs:[...i.logs,{data:t,time:new Date,type:o}]}));};var F=new S;var Ee=F;
 
 exports.SmartConsoleDevtool = ie;

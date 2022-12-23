@@ -59,11 +59,13 @@ var N=Object.defineProperty;var L=Object.getOwnPropertySymbols;var J=Object.prot
     height: 2px;
     background: white;
     cursor: row-resize;
+    user-select: none;
 `,I=s.div`
     height: 100%;
     width: 2px;
     background: #ffffff15;
     cursor: ew-resize;
+    user-select: none;
 `;function ee(e){return typeof window!="undefined"&&Number(localStorage.getItem(`smart-devtool-resize-${e}`))||null}function te({position:e}){let[t,o]=useState(ee(e)),[i,u]=useState(!1),d=useRef(null),n=useCallback(()=>{u(!0);},[]),l=useCallback(()=>{u(!1);},[]),m=useCallback(r=>{i&&o(e==="vertical"?r.pageY:r.pageX);},[i]),h=()=>({onMouseDown:n,ref:d});return useEffect(()=>{let r;return i&&(window.addEventListener("mousemove",m),window.addEventListener("mouseup",l)),r=setTimeout(()=>{localStorage.setItem(`smart-devtool-resize-${e}`,String(t===null?"":t));},700),()=>{window.removeEventListener("mousemove",m),window.removeEventListener("mouseup",l),clearTimeout(r);}},[i]),{mouseMove:t,getResizeProps:h}}var v=te;var re=()=>{let[e,t]=useState(!0),o=M(r=>r.logs),[i,u]=useState(null),{mouseMove:d,getResizeProps:n}=v({position:"vertical"}),{mouseMove:l,getResizeProps:m}=v({position:"horizontal"});useEffect(()=>{t(!1);},[]);let h=r=>()=>u(r);return e?null:jsx(T,{children:jsxs(P,{varticalHeight:d,children:[jsx(B,c({},n())),jsxs(C,{children:[jsx(D,{"data-testid":"ul",children:o.map((r,O)=>jsxs(k,{onClick:h(r),children:[jsx(E,{status:r.type,children:r.type}),jsx(H,{children:jsx("code",{children:r.data})})]},O))}),i?jsxs(W,{horizontalWidth:l,children:[jsx(I,c({},m())),JSON.stringify(i)]}):null]})]})})},ie=re;var p,w,S=class{constructor(){z(this,p);}log(t){y(this,p,w).call(this,t,"log");}error(t){y(this,p,w).call(this,t,"error");}};p=new WeakSet,w=function(t,o){f.setState(i=>({logs:[...i.logs,{data:t,time:new Date,type:o}]}));};var F=new S;var Ee=F;
 
 export { ie as SmartConsoleDevtool, Ee as default };
