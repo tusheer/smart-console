@@ -16,3 +16,8 @@ export const isJsonString = (str: string) => {
     }
     return true;
 };
+
+export const timeFormat = (time: Date) =>
+    time.toLocaleTimeString('en-US', {
+        hour12: true,
+    });

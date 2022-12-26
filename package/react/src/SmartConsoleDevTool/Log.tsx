@@ -1,6 +1,7 @@
 import React from 'react';
 import { Log as LogType } from '../store';
 import { List, LogBody, LogStatus, Time } from './Styles';
+import { timeFormat } from '../utils';
 
 interface ILogProps {
     log: LogType;
@@ -15,10 +16,7 @@ const Log: React.FC<ILogProps> = ({ log, onSelect }) => {
                 {JSON.stringify(log.data)}
                 <Time>
                     <TimeIcon />
-                    {log.time.toLocaleTimeString('en-US', {
-                        hour12: true,
-                        formatMatcher: 'best fit',
-                    })}
+                    {timeFormat(log.time)}
                 </Time>
             </LogBody>
         </List>
