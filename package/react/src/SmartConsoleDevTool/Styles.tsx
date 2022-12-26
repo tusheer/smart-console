@@ -58,6 +58,8 @@ export const LogBody = styled.div`
     padding: 4px 5px;
     color: white;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
 `;
 
 export const LogDetails = styled.div<{ horizontalWidth: number | null }>`
@@ -87,4 +89,16 @@ export const HorizontalResizeBar = styled.div`
     background: #ffffff15;
     cursor: ew-resize;
     user-select: none;
+`;
+
+export const Time = styled.div`
+    height: 100%;
+    align-items: center;
+    display: flex;
+    font-size: 15px;
+    gap: 4px;
+    svg {
+        height: 18px;
+        width: 18px;
+    }
 `;
