@@ -1,11 +1,26 @@
 import Console, { SmartConsoleDevtool } from '@smart-console/react';
 
 export default function Web() {
-    Console.error('this is new console');
-
     return (
         <div>
-            <h1 onClick={() => Console.error('test')}>Web</h1>
+            <button
+                onClick={() =>
+                    Console.log({
+                        new: 'OBject',
+                    })
+                }>
+                A object
+            </button>
+            <button onClick={() => Console.log(['323', 2323, 2332])}>
+                A Array
+            </button>
+            <button onClick={() => Console.log(3)}>A number</button>
+            <button
+                onClick={() =>
+                    Console.log(JSON.stringify({ hello: 'tusher' }))
+                }>
+                A Json
+            </button>
             <SmartConsoleDevtool />
         </div>
     );
