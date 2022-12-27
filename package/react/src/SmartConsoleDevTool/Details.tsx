@@ -1,14 +1,20 @@
-import React, { useMemo } from 'react';
+import React, { useState } from 'react';
 import { HorizontalResizeBar, LogDetails } from './Styles';
 import useWindowResize from './useWindowResize';
 import { Log } from '../store';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, Variants, useMotionValueEvent } from 'framer-motion';
 
 interface ILogDetails {
     selectedLog: Log | null;
+    onClearSelectedLog: () => void;
 }
 
-const Details: React.FC<ILogDetails> = ({ selectedLog }) => {
+const Details: React.FC<ILogDetails> = ({
+    selectedLog,
+    onClearSelectedLog,
+}) => {
+    const [isAnimationEnd, setIsAnimationEnd] = useState(false);
+
     const {
         mouseMove: logDetailsMouseMove,
         getResizeProps: getHorigontalResizeProps,
@@ -16,48 +22,60 @@ const Details: React.FC<ILogDetails> = ({ selectedLog }) => {
         position: 'horizontal',
     });
 
-    const variants = useMemo(() => {
-        return {
-            initial: {
-                opacity: 0.7,
-                width: 0,
+    const VIEW_VARIANTS: Variants = {
+        initial: {
+            opacity: 0,
+            width: 0,
+        },
+        animate: {
+            width:
+                logDetailsMouseMove !== null
+                    ? window.innerWidth - logDetailsMouseMove + 'px'
+                    : '400px',
+            opacity: 1,
+            transition: {
+                duration: isAnimationEnd ? 0 : 0.2,
             },
-            in: {
-                width:
-                    logDetailsMouseMove !== null
-                        ? window.innerWidth - logDetailsMouseMove + 'px'
-                        : '400px',
-                opacity: 1,
-                transition: {
-                    opacity: {
-                        duration: 0.4,
-                        delay: 0.4,
-                    },
-                },
+        },
+        exit: {
+            opacity: 0,
+            width: 0,
+            transition: {
+                duration: 0.2,
             },
-            out: {
-                opacity: 0,
-                transition: {
-                    opacity: {
-                        duration: 0.4,
-                    },
-                },
-            },
-        };
-    }, []);
-    if (selectedLog === null) return null;
+        },
+    };
+
+    const handleClearSelectedLog = () => {
+        setIsAnimationEnd(false);
+        onClearSelectedLog();
+    };
+
+    useMotionValueEvent(VIEW_VARIANTS, 'change', (latest) => {
+        console.log(latest);
+    });
 
     return (
         <AnimatePresence>
-            <LogDetails
-                initial="initial"
-                animate="in"
-                exit="out"
-                variants={variants}
-                horizontalWidth={logDetailsMouseMove}>
-                <HorizontalResizeBar {...getHorigontalResizeProps()} />
-                {JSON.stringify(selectedLog)}
-            </LogDetails>
+            {selectedLog !== null ? (
+                <LogDetails
+                    variants={VIEW_VARIANTS}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    // onAnimationComplete={() => {
+                    //     setIsAnimationEnd(true);
+                    // }}
+                    onTransitionEnd={() => {
+                        console.log('ko');
+                    }}>
+                    <HorizontalResizeBar {...getHorigontalResizeProps()} />
+                    <div>
+                        {JSON.stringify(selectedLog)}
+                        <button onClick={handleClearSelectedLog}>Exit</button>
+                    </div>
+                </LogDetails>
+            ) : null}
         </AnimatePresence>
     );
 };

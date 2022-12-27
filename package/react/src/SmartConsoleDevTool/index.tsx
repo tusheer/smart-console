@@ -45,7 +45,10 @@ const SmartConsoleDevTools = () => {
                             );
                         })}
                     </ListContainer>
-                    <Details selectedLog={selectedLog} />
+                    <Details
+                        selectedLog={selectedLog}
+                        onClearSelectedLog={() => setSelectedLog(null)}
+                    />
                 </ListWraper>
             </Container>
         </ThemeProvider>

@@ -68,13 +68,7 @@ export const LogDetails = styled(motion.div, {
         if (props === 'horizontalWidth') return false;
         return true;
     },
-})<{
-    horizontalWidth: null | number;
-}>`
-    width: ${(props) =>
-        props.horizontalWidth !== null
-            ? window.innerWidth - props.horizontalWidth + 'px'
-            : '400px'};
+})`
     display: flex;
     height: 100%;
     overflow-y: auto;
