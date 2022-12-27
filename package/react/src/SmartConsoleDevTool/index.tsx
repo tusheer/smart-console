@@ -9,7 +9,7 @@ import {
 } from './Styles';
 import useWindowResize from './useWindowResize';
 import Log from './Log';
-import Details from './LogDetails';
+import Details from './Details';
 
 const SmartConsoleDevTools = () => {
     const [isSsr, setIsSsr] = useState(true);

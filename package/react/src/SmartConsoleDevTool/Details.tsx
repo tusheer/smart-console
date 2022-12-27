@@ -19,7 +19,7 @@ const Details: React.FC<ILogDetails> = ({ selectedLog }) => {
     const variants = useMemo(() => {
         return {
             initial: {
-                opacity: 0,
+                opacity: 0.7,
                 width: 0,
             },
             in: {
