@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
 export const Container = styled.div<{ varticalHeight: number | null }>`
     font-family: 'system-ui' !important;
@@ -62,7 +63,14 @@ export const LogBody = styled.div`
     justify-content: space-between;
 `;
 
-export const LogDetails = styled.div<{ horizontalWidth: number | null }>`
+export const LogDetails = styled(motion.div, {
+    shouldForwardProp(props) {
+        if (props === 'horizontalWidth') return false;
+        return true;
+    },
+})<{
+    horizontalWidth: null | number;
+}>`
     width: ${(props) =>
         props.horizontalWidth !== null
             ? window.innerWidth - props.horizontalWidth + 'px'
@@ -96,4 +104,5 @@ export const HorizontalResizeBar = styled.div`
     width: 2px;
     cursor: ew-resize;
     user-select: none;
+    background: #ffffff15;
 `;

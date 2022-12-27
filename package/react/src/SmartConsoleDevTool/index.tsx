@@ -3,14 +3,13 @@ import ThemeProvider from './ThemeProvider';
 import { Log as LogType, useStore } from '../store';
 import {
     Container,
-    HorizontalResizeBar,
     ListContainer,
     ListWraper,
-    LogDetails,
     VarticalResizeBar,
 } from './Styles';
 import useWindowResize from './useWindowResize';
 import Log from './Log';
+import Details from './LogDetails';
 
 const SmartConsoleDevTools = () => {
     const [isSsr, setIsSsr] = useState(true);
@@ -20,13 +19,6 @@ const SmartConsoleDevTools = () => {
 
     const { mouseMove, getResizeProps } = useWindowResize({
         position: 'vertical',
-    });
-
-    const {
-        mouseMove: logDetailsMouseMove,
-        getResizeProps: getHorigontalResizeProps,
-    } = useWindowResize({
-        position: 'horizontal',
     });
 
     useEffect(() => {
@@ -53,14 +45,7 @@ const SmartConsoleDevTools = () => {
                             );
                         })}
                     </ListContainer>
-                    {selectedLog ? (
-                        <LogDetails horizontalWidth={logDetailsMouseMove}>
-                            <HorizontalResizeBar
-                                {...getHorigontalResizeProps()}
-                            />
-                            {JSON.stringify(selectedLog)}
-                        </LogDetails>
-                    ) : null}
+                    <Details selectedLog={selectedLog} />
                 </ListWraper>
             </Container>
         </ThemeProvider>
