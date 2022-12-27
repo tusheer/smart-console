@@ -84,7 +84,6 @@ export const VarticalResizeBar = styled.div`
 `;
 
 export const LogTime = styled.div`
-    background: blue;
     height: 100%;
     align-items: center;
     display: flex;
@@ -95,7 +94,6 @@ export const LogTime = styled.div`
 export const HorizontalResizeBar = styled.div`
     height: 100%;
     width: 2px;
-    background: blue;
     cursor: ew-resize;
     user-select: none;
 `;
