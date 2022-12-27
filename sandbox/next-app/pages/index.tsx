@@ -9,17 +9,17 @@ export default function Web() {
                         new: 'OBject',
                     })
                 }>
-                A object
+                objects
             </button>
             <button onClick={() => Console.log(['323', 2323, 2332])}>
-                A Array
+                array
             </button>
-            <button onClick={() => Console.log(3)}>A number</button>
+            <button onClick={() => Console.log(3)}>number</button>
             <button
                 onClick={() =>
                     Console.log(JSON.stringify({ hello: 'tusher' }))
                 }>
-                A Json
+                json
             </button>
             <SmartConsoleDevtool />
         </div>

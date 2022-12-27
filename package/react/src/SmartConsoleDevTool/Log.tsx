@@ -1,6 +1,6 @@
 import React from 'react';
 import { Log as LogType } from '../store';
-import { List, LogBody, LogStatus, Time } from './Styles';
+import { List, LogBody, LogStatus, LogTime } from './Styles';
 import { timeFormat } from '../utils';
 
 interface ILogProps {
@@ -13,11 +13,11 @@ const Log: React.FC<ILogProps> = ({ log, onSelect }) => {
         <List onClick={onSelect(log)}>
             <LogStatus status={log.type}>{log.type}</LogStatus>
             <LogBody>
-                {JSON.stringify(log.data)}
-                <Time>
+                <div>{JSON.stringify(log.data)}</div>
+                <LogTime>
                     <TimeIcon />
-                    {timeFormat(log.time)}
-                </Time>
+                    <div>{timeFormat(log.time)}</div>
+                </LogTime>
             </LogBody>
         </List>
     );
@@ -26,6 +26,7 @@ const Log: React.FC<ILogProps> = ({ log, onSelect }) => {
 const TimeIcon = () => {
     return (
         <svg
+            style={{ height: '18px', width: '18px' }}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

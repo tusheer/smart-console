@@ -83,22 +83,19 @@ export const VarticalResizeBar = styled.div`
     user-select: none;
 `;
 
-export const HorizontalResizeBar = styled.div`
-    height: 100%;
-    width: 2px;
-    background: #ffffff15;
-    cursor: ew-resize;
-    user-select: none;
-`;
-
-export const Time = styled.div`
+export const LogTime = styled.div`
+    background: blue;
     height: 100%;
     align-items: center;
     display: flex;
     font-size: 15px;
     gap: 4px;
-    svg {
-        height: 18px;
-        width: 18px;
-    }
+`;
+
+export const HorizontalResizeBar = styled.div`
+    height: 100%;
+    width: 2px;
+    background: blue;
+    cursor: ew-resize;
+    user-select: none;
 `;
