@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { HorizontalResizeBar, LogDetails } from './Styles';
 import useWindowResize from './useWindowResize';
 import { Log } from '../store';
-import { AnimatePresence, Variants, useMotionValueEvent } from 'framer-motion';
+import { AnimatePresence, Variants } from 'framer-motion';
 
 interface ILogDetails {
     selectedLog: Log | null;
@@ -51,10 +51,6 @@ const Details: React.FC<ILogDetails> = ({
         onClearSelectedLog();
     };
 
-    useMotionValueEvent(VIEW_VARIANTS, 'change', (latest) => {
-        console.log(latest);
-    });
-
     return (
         <AnimatePresence>
             {selectedLog !== null ? (
@@ -62,13 +58,7 @@ const Details: React.FC<ILogDetails> = ({
                     variants={VIEW_VARIANTS}
                     initial="initial"
                     animate="animate"
-                    exit="exit"
-                    // onAnimationComplete={() => {
-                    //     setIsAnimationEnd(true);
-                    // }}
-                    onTransitionEnd={() => {
-                        console.log('ko');
-                    }}>
+                    exit="exit">
                     <HorizontalResizeBar {...getHorigontalResizeProps()} />
                     <div>
                         {JSON.stringify(selectedLog)}
