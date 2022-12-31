@@ -63,12 +63,9 @@ export const LogBody = styled.div`
     justify-content: space-between;
 `;
 
-export const LogDetails = styled(motion.div, {
-    shouldForwardProp(props) {
-        if (props === 'horizontalWidth') return false;
-        return true;
-    },
-})`
+export const LogDetails = styled(motion.div)`
+    width: 0px;
+    opacity: 0;
     display: flex;
     height: 100%;
     overflow-y: auto;

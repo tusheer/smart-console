@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HorizontalResizeBar, LogDetails } from './Styles';
 import useWindowResize from './useWindowResize';
 import { Log } from '../store';
-import { AnimatePresence, Variants } from 'framer-motion';
+import { AnimatePresence, Variant, useAnimationControls } from 'framer-motion';
 
 interface ILogDetails {
     selectedLog: Log | null;
     onClearSelectedLog: () => void;
 }
+
+const getDetailsWidth = (mouseMove: number | null): string =>
+    mouseMove !== null ? window.innerWidth - mouseMove + 'px' : '400px';
+
+const generateAnimation = (
+    opacity = 0,
+    width: number | string = 0,
+    duration = 0
+): Variant => {
+    return {
+        opacity,
+        width,
+        transition: {
+            duration,
+        },
+    };
+};
 
 const Details: React.FC<ILogDetails> = ({
     selectedLog,
@@ -15,51 +32,41 @@ const Details: React.FC<ILogDetails> = ({
 }) => {
     const [isAnimationEnd, setIsAnimationEnd] = useState(false);
 
-    const {
-        mouseMove: logDetailsMouseMove,
-        getResizeProps: getHorigontalResizeProps,
-    } = useWindowResize({
+    const { mouseMove, getResizeProps } = useWindowResize({
         position: 'horizontal',
     });
 
-    const VIEW_VARIANTS: Variants = {
-        initial: {
-            opacity: 0,
-            width: 0,
-        },
-        animate: {
-            width:
-                logDetailsMouseMove !== null
-                    ? window.innerWidth - logDetailsMouseMove + 'px'
-                    : '400px',
-            opacity: 1,
-            transition: {
-                duration: isAnimationEnd ? 0 : 0.2,
-            },
-        },
-        exit: {
-            opacity: 0,
-            width: 0,
-            transition: {
-                duration: 0.2,
-            },
-        },
+    const control = useAnimationControls();
+
+    const handleStartAnimation = async () => {
+        await control.start(
+            generateAnimation(1, getDetailsWidth(mouseMove), 0.5)
+        );
+        setIsAnimationEnd(true);
     };
 
-    const handleClearSelectedLog = () => {
-        setIsAnimationEnd(false);
+    useEffect(() => {
+        if (selectedLog !== null && !isAnimationEnd) {
+            handleStartAnimation();
+        }
+        if (isAnimationEnd) {
+            control.start(generateAnimation(1, getDetailsWidth(mouseMove)));
+        }
+    }, [selectedLog, mouseMove, isAnimationEnd]);
+
+    const handleClearSelectedLog = async () => {
+        await control.start(generateAnimation(0, 0, 0.3));
         onClearSelectedLog();
+        setTimeout(() => {
+            setIsAnimationEnd(false);
+        });
     };
 
     return (
         <AnimatePresence>
             {selectedLog !== null ? (
-                <LogDetails
-                    variants={VIEW_VARIANTS}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit">
-                    <HorizontalResizeBar {...getHorigontalResizeProps()} />
+                <LogDetails animate={control}>
+                    <HorizontalResizeBar {...getResizeProps()} />
                     <div>
                         {JSON.stringify(selectedLog)}
                         <button onClick={handleClearSelectedLog}>Exit</button>
