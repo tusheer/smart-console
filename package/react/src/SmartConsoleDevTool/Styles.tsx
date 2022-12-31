@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 
-export const Container = styled.div<{ varticalHeight: number | null }>`
+export const Container = styled(motion.div)`
     font-family: 'system-ui' !important;
     padding: 0px;
     background: ${(props) => props.theme.color.primary};
@@ -10,10 +10,8 @@ export const Container = styled.div<{ varticalHeight: number | null }>`
     bottom: 0;
     left: 0;
     right: 0;
-    height: ${(props) =>
-        props.varticalHeight !== null
-            ? window.innerHeight - props.varticalHeight + 'px'
-            : '300px'};
+    height: 0;
+    max-height: 100vh;
     margin: 0;
 `;
 
@@ -30,7 +28,7 @@ export const ListContainer = styled.ul`
     overflow-y: auto;
 `;
 
-export const List = styled.li`
+export const List = styled(motion.li)`
     width: 100%;
     cursor: pointer;
     color: ${(props) => props.theme.color.primary};

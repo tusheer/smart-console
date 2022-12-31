@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { HorizontalResizeBar, LogDetails } from './Styles';
-import useWindowResize from './useWindowResize';
+import useWindowResize from '../hooks/useWindowResize';
 import { Log } from '../store';
 import { AnimatePresence, Variant, useAnimationControls } from 'framer-motion';
 
@@ -40,7 +40,7 @@ const Details: React.FC<ILogDetails> = ({
 
     const handleStartAnimation = async () => {
         await control.start(
-            generateAnimation(1, getDetailsWidth(mouseMove), 0.5)
+            generateAnimation(1, getDetailsWidth(mouseMove), 0.4)
         );
         setIsAnimationEnd(true);
     };

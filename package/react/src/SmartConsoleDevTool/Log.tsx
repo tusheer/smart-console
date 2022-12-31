@@ -10,7 +10,11 @@ interface ILogProps {
 
 const Log: React.FC<ILogProps> = ({ log, onSelect }) => {
     return (
-        <List onClick={onSelect(log)}>
+        <List
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onSelect(log)}>
             <LogStatus status={log.type}>{log.type}</LogStatus>
             <LogBody>
                 <div>{JSON.stringify(log.data)}</div>
