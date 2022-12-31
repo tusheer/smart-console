@@ -48,6 +48,7 @@ const Details: React.FC<ILogDetails> = ({
     useEffect(() => {
         if (selectedLog !== null && !isAnimationEnd) {
             handleStartAnimation();
+            return;
         }
         if (isAnimationEnd) {
             control.start(generateAnimation(1, getDetailsWidth(mouseMove)));
@@ -55,7 +56,7 @@ const Details: React.FC<ILogDetails> = ({
     }, [selectedLog, mouseMove, isAnimationEnd]);
 
     const handleClearSelectedLog = async () => {
-        await control.start(generateAnimation(0, 0, 0.3));
+        await control.start(generateAnimation(0, 0, 0.4));
         onClearSelectedLog();
         setTimeout(() => {
             setIsAnimationEnd(false);
