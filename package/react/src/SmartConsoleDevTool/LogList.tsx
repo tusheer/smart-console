@@ -15,14 +15,31 @@ const LogList = () => {
         });
     };
 
+    const handleRemoveLog = (id: string) => (event: React.MouseEvent) => {
+        event.stopPropagation();
+        const _logs = [...logs];
+        const findIndex = _logs.findIndex((log) => log.id === id);
+        if (findIndex > -1) {
+            _logs.splice(findIndex, 1);
+        }
+        store.setState((value) => {
+            return {
+                logs: _logs,
+                selectedLog:
+                    value.selectedLog?.id === id ? null : value.selectedLog,
+            };
+        });
+    };
+
     return (
         <ListContainer data-testid="ul">
-            <AnimatePresence>
-                {logs.map((value, index) => {
+            <AnimatePresence presenceAffectsLayout>
+                {logs.map((value) => {
                     return (
                         <Log
+                            onRemove={handleRemoveLog}
                             log={value}
-                            key={index}
+                            key={value.id}
                             onSelect={handleSelectedLog}
                         />
                     );

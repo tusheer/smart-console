@@ -5,10 +5,11 @@ import { timeFormat } from '../utils';
 import { motion } from 'framer-motion';
 interface ILogProps {
     log: LogType;
-    onSelect: (log: LogType) => () => void;
+    onSelect: (log: LogType) => (event: React.MouseEvent) => void;
+    onRemove: (id: string) => (event: React.MouseEvent) => void;
 }
 
-const Log: React.FC<ILogProps> = ({ log, onSelect }) => {
+const Log: React.FC<ILogProps> = ({ log, onSelect, onRemove }) => {
     const varitans = {
         hover: {
             width: 18,
@@ -21,7 +22,7 @@ const Log: React.FC<ILogProps> = ({ log, onSelect }) => {
         <List
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            exit={{ opacity: 0, height: 0 }}
             onClick={onSelect(log)}
             whileHover="hover">
             <LogStatus status={log.type}>{log.type}</LogStatus>
@@ -39,6 +40,7 @@ const Log: React.FC<ILogProps> = ({ log, onSelect }) => {
                     </div>
 
                     <motion.div
+                        onClick={onRemove(log.id)}
                         style={{ display: 'flex', alignItems: 'center' }}
                         variants={varitans}
                         initial={{ width: 0, opacity: 0, marginLeft: 0 }}>
