@@ -10,6 +10,7 @@ export type Log = {
     type: LogType;
     data: any;
     time: Date;
+    id: string;
 };
 
 type InitailState = {

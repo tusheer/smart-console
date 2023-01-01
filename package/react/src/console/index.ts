@@ -1,4 +1,13 @@
 import { LogType, store } from '../store';
+import { getUniqueId } from '../utils';
+
+function getStackTrace() {
+    let stack = new Error().stack || '';
+    // stack = stack.split('\n').map(function (line) {
+    //     return line.trim();
+    // });
+    return stack;
+}
 
 class Console {
     #setState(log: any, type: LogType) {
@@ -10,6 +19,7 @@ class Console {
                         data: log,
                         time: new Date(),
                         type: type,
+                        id: getUniqueId(),
                     },
                 ],
             };
@@ -17,6 +27,7 @@ class Console {
     }
 
     log(log: any) {
+        console.log(getStackTrace());
         this.#setState(log, 'log');
     }
 

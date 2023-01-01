@@ -85,7 +85,6 @@ export const LogTime = styled.div`
     align-items: center;
     display: flex;
     font-size: 15px;
-    gap: 4px;
 `;
 
 export const HorizontalResizeBar = styled.div`
