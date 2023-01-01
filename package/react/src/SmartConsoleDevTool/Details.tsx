@@ -44,7 +44,7 @@ const Details = () => {
             handleStartAnimation();
             return;
         }
-        if (isAnimationEnd) {
+        if (isAnimationEnd && selectedLog) {
             control.start(generateAnimation(1, getDetailsWidth(mouseMove)));
         }
     }, [selectedLog, mouseMove, isAnimationEnd]);
@@ -56,9 +56,8 @@ const Details = () => {
                 selectedLog: null,
             };
         });
-        setTimeout(() => {
-            setIsAnimationEnd(false);
-        });
+
+        setIsAnimationEnd(false);
     };
 
     return (
