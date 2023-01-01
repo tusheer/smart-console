@@ -93,4 +93,5 @@ export const HorizontalResizeBar = styled.div`
     cursor: ew-resize;
     user-select: none;
     background: #ffffff15;
+    flex-shrink: 0;
 `;

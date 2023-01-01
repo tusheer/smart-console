@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ListContainer } from './Styles';
 import { AnimatePresence } from 'framer-motion';
 import { store, useStore } from '../store';
@@ -6,6 +6,8 @@ import Log from './Log';
 
 const LogList = () => {
     const logs = useStore((sate) => sate.logs);
+    const previousLogLength = useRef(logs.length);
+    const containerRef = useRef<HTMLUListElement>(null);
 
     const handleSelectedLog = (log: any) => () => {
         store.setState(() => {
@@ -31,8 +33,18 @@ const LogList = () => {
         });
     };
 
+    useEffect(() => {
+        if (previousLogLength.current < logs.length) {
+            containerRef.current?.scrollTo({
+                top: containerRef.current.scrollHeight,
+                behavior: 'smooth',
+            });
+        }
+        previousLogLength.current = logs.length;
+    }, [logs]);
+
     return (
-        <ListContainer data-testid="ul">
+        <ListContainer ref={containerRef} data-testid="ul">
             <AnimatePresence presenceAffectsLayout>
                 {logs.map((value) => {
                     return (
