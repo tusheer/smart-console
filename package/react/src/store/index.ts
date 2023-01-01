@@ -14,10 +14,12 @@ export type Log = {
 
 type InitailState = {
     logs: Log[];
+    selectedLog: Log | null;
 };
 
 export const initialStore: InitailState = {
     logs: [],
+    selectedLog: null,
 };
 
 export const createStore = (initialStore: Store) => {

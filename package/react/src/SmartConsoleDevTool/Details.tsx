@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { HorizontalResizeBar, LogDetails } from './Styles';
 import useWindowResize from '../hooks/useWindowResize';
-import { Log } from '../store';
+import { store, useStore } from '../store';
 import { AnimatePresence, Variant, useAnimationControls } from 'framer-motion';
-
-interface ILogDetails {
-    selectedLog: Log | null;
-    onClearSelectedLog: () => void;
-}
 
 const getDetailsWidth = (mouseMove: number | null): string =>
     mouseMove !== null ? window.innerWidth - mouseMove + 'px' : '400px';
@@ -26,10 +21,9 @@ const generateAnimation = (
     };
 };
 
-const Details: React.FC<ILogDetails> = ({
-    selectedLog,
-    onClearSelectedLog,
-}) => {
+const Details = () => {
+    const selectedLog = useStore((sate) => sate.selectedLog);
+
     const [isAnimationEnd, setIsAnimationEnd] = useState(false);
 
     const { mouseMove, getResizeProps } = useWindowResize({
@@ -57,7 +51,11 @@ const Details: React.FC<ILogDetails> = ({
 
     const handleClearSelectedLog = async () => {
         await control.start(generateAnimation(0, 0, 0.4));
-        onClearSelectedLog();
+        store.setState(() => {
+            return {
+                selectedLog: null,
+            };
+        });
         setTimeout(() => {
             setIsAnimationEnd(false);
         });

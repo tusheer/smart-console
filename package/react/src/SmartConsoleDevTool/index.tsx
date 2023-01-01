@@ -1,16 +1,10 @@
 import { useEffect, useState } from 'react';
 import ThemeProvider from './ThemeProvider';
-import { Log as LogType, useStore } from '../store';
-import {
-    Container,
-    ListContainer,
-    ListWraper,
-    VarticalResizeBar,
-} from './Styles';
+import { Container, ListWraper, VarticalResizeBar } from './Styles';
 import useWindowResize from '../hooks/useWindowResize';
-import Log from './Log';
 import Details from './Details';
 import { AnimatePresence, Variant, useAnimationControls } from 'framer-motion';
+import LogList from './LogList';
 
 const getConsoleHeight = (mouseMove: number | null): string =>
     mouseMove !== null ? window.innerHeight - mouseMove + 'px' : '300px';
@@ -31,13 +25,9 @@ const generateAnimation = (
 };
 
 const SmartConsoleDevTools = () => {
-    const logs = useStore((sate) => sate.logs);
-
     const [isSsr, setIsSsr] = useState(true);
     const [isAnimationEnd, setIsAnimationEnd] = useState(false);
     const [isOpenConsole, setIsOpenConsole] = useState(false);
-    const [selectedLog, setSelectedLog] = useState<null | LogType>(null);
-
     const { mouseMove, getResizeProps } = useWindowResize({
         position: 'vertical',
     });
@@ -64,8 +54,6 @@ const SmartConsoleDevTools = () => {
         setIsSsr(false);
     }, []);
 
-    const handleSelectLog = (log: LogType) => () => setSelectedLog(log);
-
     if (isSsr) return null;
 
     return (
@@ -75,23 +63,8 @@ const SmartConsoleDevTools = () => {
                     <Container animate={control}>
                         <VarticalResizeBar {...getResizeProps()} />
                         <ListWraper>
-                            <ListContainer data-testid="ul">
-                                <AnimatePresence>
-                                    {logs.map((value, index) => {
-                                        return (
-                                            <Log
-                                                log={value}
-                                                key={index}
-                                                onSelect={handleSelectLog}
-                                            />
-                                        );
-                                    })}
-                                </AnimatePresence>
-                            </ListContainer>
-                            <Details
-                                selectedLog={selectedLog}
-                                onClearSelectedLog={() => setSelectedLog(null)}
-                            />
+                            <LogList />
+                            <Details />
                         </ListWraper>
                     </Container>
                 ) : null}
