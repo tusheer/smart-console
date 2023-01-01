@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { HorizontalResizeBar, LogDetails } from './Styles';
 import useWindowResize from '../hooks/useWindowResize';
 import { store, useStore } from '../store';
@@ -23,7 +23,7 @@ const generateAnimation = (
 
 const Details = () => {
     const selectedLog = useStore((sate) => sate.selectedLog);
-
+    const previouseSelectedLog = useRef(selectedLog);
     const [isAnimationEnd, setIsAnimationEnd] = useState(false);
 
     const { mouseMove, getResizeProps } = useWindowResize({
@@ -39,10 +39,19 @@ const Details = () => {
         setIsAnimationEnd(true);
     };
 
+    const handleEndAnimation = async () => {
+        await control.start(generateAnimation(0, 0, 0.4));
+        setIsAnimationEnd(false);
+    };
+
     useEffect(() => {
+        if (selectedLog === null && previouseSelectedLog.current !== null) {
+            handleEndAnimation();
+        }
+        previouseSelectedLog.current = selectedLog;
+
         if (selectedLog !== null && !isAnimationEnd) {
             handleStartAnimation();
-            return;
         }
         if (isAnimationEnd && selectedLog) {
             control.start(generateAnimation(1, getDetailsWidth(mouseMove)));
@@ -50,19 +59,16 @@ const Details = () => {
     }, [selectedLog, mouseMove, isAnimationEnd]);
 
     const handleClearSelectedLog = async () => {
-        await control.start(generateAnimation(0, 0, 0.4));
         store.setState(() => {
             return {
                 selectedLog: null,
             };
         });
-
-        setIsAnimationEnd(false);
     };
 
     return (
         <AnimatePresence>
-            {selectedLog !== null ? (
+            {previouseSelectedLog !== null ? (
                 <LogDetails animate={control}>
                     <HorizontalResizeBar {...getResizeProps()} />
                     <div>

@@ -22,7 +22,7 @@ const Log: React.FC<ILogProps> = ({ log, onSelect, onRemove }) => {
         <List
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, height: 0 }}
+            exit={{ opacity: 0, height: 0, transition: { type: 'keyframes' } }}
             onClick={onSelect(log)}
             whileHover="hover">
             <LogStatus status={log.type}>{log.type}</LogStatus>
@@ -43,7 +43,11 @@ const Log: React.FC<ILogProps> = ({ log, onSelect, onRemove }) => {
                         onClick={onRemove(log.id)}
                         style={{ display: 'flex', alignItems: 'center' }}
                         variants={varitans}
-                        initial={{ width: 0, opacity: 0, marginLeft: 0 }}>
+                        initial={{
+                            width: 0,
+                            opacity: 0,
+                            marginLeft: 0,
+                        }}>
                         <CrossIcon />
                     </motion.div>
                 </LogTime>
@@ -72,7 +76,7 @@ const TimeIcon = () => {
 const CrossIcon = () => {
     return (
         <motion.svg
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.1, rotate: 90 }}
             style={{ height: '18px', width: '18px' }}
             fill="none"
             stroke="currentColor"
