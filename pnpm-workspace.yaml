@@ -1,4 +1,4 @@
 packages:
-  - "sandbox/*"
-  - "shared/*"
-  - "package/*"
+    - 'sandbox/*'
+    - 'shared/*'
+    - 'package/*'
