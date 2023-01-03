@@ -1,4 +1,4 @@
-export const getLogType = (log: any) => {
+export const getDataType = (log: any) => {
     switch (typeof log) {
         case 'string':
             return isJsonString(log) ? 'json' : 'string';
