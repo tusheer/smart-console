@@ -6,7 +6,13 @@ export default function Web() {
             <button
                 onClick={() =>
                     Console.log({
-                        new: 'OBject',
+                        new: '1',
+                        nested: {
+                            hi: '1',
+                            nested: {
+                                pipi: 1,
+                            },
+                        },
                     })
                 }>
                 objects

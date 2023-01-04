@@ -1,29 +1,34 @@
-import React, { createElement } from 'react';
+import React, { useMemo } from 'react';
 import { getDataType } from '../utils';
 
 interface IObjectView {
-    children: { [key: string]: string };
+    children: any;
 }
 
-const Hi = () => <div className="">tusher</div>;
+const ObjectView: React.FC<IObjectView> = ({ children }) => {
+    const data =
+        getDataType(children) === 'json' ? JSON.parse(children) : children;
 
-const createObjectView = (
-    object: any,
-    Element: React.DetailedReactHTMLElement<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-    >
-) => {
-    if (getDataType(object) !== 'object') {
-        return createElement(React.Fragment, null, object);
+    if (getDataType(data) !== 'object') {
+        return children;
     }
 
-    return createElement('div', null), Element;
-};
+    const keys = useMemo(() => Object.keys(data), []);
 
-const ObjectView: React.FC<IObjectView> = ({ children }) => {
-    const Element = createElement('div', null, JSON.stringify(children));
-    return Element;
+    return (
+        <div>
+            {keys.map((key) => (
+                <div key={key}>
+                    {key} :
+                    {getDataType(data[key]) === 'object' ? (
+                        <ObjectView>{data[key]}</ObjectView>
+                    ) : (
+                        data[key]
+                    )}
+                </div>
+            ))}
+        </div>
+    );
 };
 
 export default ObjectView;
