@@ -36,3 +36,8 @@ export const getUniqueId = () => {
 
     return idstr;
 };
+
+export const isObjectOrJsonType = (data: any) => {
+    const dataType = getDataType(data);
+    return dataType === 'object' || dataType === 'json';
+};

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { getDataType } from '../utils';
+import { getDataType, isObjectOrJsonType } from '../utils';
 
 interface IObjectView {
     children: any;
@@ -15,7 +15,7 @@ const ObjectView: React.FC<IObjectView> = ({
     const data =
         getDataType(children) === 'json' ? JSON.parse(children) : children;
 
-    if (getDataType(data) !== 'object') {
+    if (!isObjectOrJsonType(data)) {
         return children;
     }
 
