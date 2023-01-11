@@ -1,4 +1,4 @@
-import React, { MouseEvent, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { getDataType, isObjectOrJsonType } from '../utils';
 
 interface IObjectView {
@@ -18,20 +18,29 @@ const ObjectView: React.FC<IObjectView> = ({
     if (!isObjectOrJsonType(data)) {
         return children;
     }
+    const ref = useRef<HTMLDivElement>(null);
 
-    const onHoverObject = (event: MouseEvent<HTMLDivElement>) => {
-        event.stopPropagation();
-        event.currentTarget.style.color = 'red';
+    const handleMouseEnterEvent = (event: globalThis.MouseEvent) => {
+        if (!ref.current) return;
+        event.stopImmediatePropagation();
     };
 
-    const onHoverOutObject = (event: MouseEvent<HTMLDivElement>) => {
-        event.stopPropagation();
-        event.currentTarget.style.color = '';
-    };
+    useEffect(() => {
+        if (!ref.current) return;
+        ref.current.addEventListener(
+            'mouseup',
+            handleMouseEnterEvent as any,
+            true
+        );
+        return () => {
+            ref.current?.removeEventListener('mouseup', handleMouseEnterEvent);
+        };
+    }, []);
+
     const keys = useMemo(() => Object.keys(data), []);
 
     return (
-        <div onMouseLeave={onHoverOutObject} onMouseEnter={onHoverObject}>
+        <div ref={ref}>
             {keys.map((key) => (
                 <div style={{ marginLeft: marginLeft + 20 }} key={key}>
                     {key} {'>'}

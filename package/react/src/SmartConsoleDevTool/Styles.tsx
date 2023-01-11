@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import { motion } from 'framer-motion';
 
 export const Container = styled(motion.div)`
@@ -94,4 +95,10 @@ export const HorizontalResizeBar = styled.div`
     user-select: none;
     background: #ffffff15;
     flex-shrink: 0;
+`;
+
+export const centerCss = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

@@ -6,11 +6,11 @@ export default function Web() {
             <button
                 onClick={() =>
                     Console.error({
-                        new: '1',
+                        noNested: '1',
                         nested: {
-                            hi: '1',
-                            nested: {
-                                pipi: 1,
+                            noNested2: '1',
+                            nested2: {
+                                nonested3: 1,
                             },
                         },
                     })
