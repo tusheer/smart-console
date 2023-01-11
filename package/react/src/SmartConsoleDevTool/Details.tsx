@@ -3,6 +3,7 @@ import { HorizontalResizeBar, LogDetails } from './Styles';
 import useWindowResize from '../hooks/useWindowResize';
 import { store, useStore } from '../store';
 import { AnimatePresence, Variant, useAnimationControls } from 'framer-motion';
+import ObjectView from './ObjectView';
 
 const getDetailsWidth = (mouseMove: number | null): string =>
     mouseMove !== null ? window.innerWidth - mouseMove + 'px' : '400px';
@@ -72,7 +73,10 @@ const Details = () => {
                 <LogDetails animate={control}>
                     <HorizontalResizeBar {...getResizeProps()} />
                     <div>
-                        {JSON.stringify(selectedLog)}
+                        {selectedLog !== null ? (
+                            <ObjectView>{selectedLog}</ObjectView>
+                        ) : null}
+
                         <button onClick={handleClearSelectedLog}>Exit</button>
                     </div>
                 </LogDetails>

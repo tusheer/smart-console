@@ -3,9 +3,15 @@ import { getDataType } from '../utils';
 
 interface IObjectView {
     children: any;
+    nestedIndex?: number;
+    marginLeft?: number;
 }
 
-const ObjectView: React.FC<IObjectView> = ({ children }) => {
+const ObjectView: React.FC<IObjectView> = ({
+    children,
+    nestedIndex = 0,
+    marginLeft = 0,
+}) => {
     const data =
         getDataType(children) === 'json' ? JSON.parse(children) : children;
 
@@ -18,13 +24,13 @@ const ObjectView: React.FC<IObjectView> = ({ children }) => {
     return (
         <div>
             {keys.map((key) => (
-                <div key={key}>
-                    {key} :
-                    {getDataType(data[key]) === 'object' ? (
-                        <ObjectView>{data[key]}</ObjectView>
-                    ) : (
-                        data[key]
-                    )}
+                <div style={{ marginLeft: marginLeft + 20 }} key={key}>
+                    {key} {'>'}
+                    <ObjectView
+                        nestedIndex={++nestedIndex}
+                        marginLeft={marginLeft + 20}>
+                        {data[key]}
+                    </ObjectView>
                 </div>
             ))}
         </div>

@@ -85,7 +85,7 @@ const TimeIcon = () => {
 const CrossIcon = () => {
     return (
         <motion.svg
-            whileHover={{ scale: 1.1, rotate: 90 }}
+            whileHover={{ scale: 1.1 }}
             style={{ height: '18px', width: '18px' }}
             fill="none"
             stroke="currentColor"

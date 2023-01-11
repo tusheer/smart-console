@@ -5,7 +5,7 @@ export default function Web() {
         <div>
             <button
                 onClick={() =>
-                    Console.log({
+                    Console.error({
                         new: '1',
                         nested: {
                             hi: '1',
