@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useId, useCallback } from 'react';
 import { getDataType, isObjectOrJsonType } from '../utils';
 
 interface IObjectView {
@@ -19,34 +19,53 @@ const ObjectView: React.FC<IObjectView> = ({
         return children;
     }
     const ref = useRef<HTMLDivElement>(null);
+    const uid = useId();
 
-    const handleMouseEnterEvent = (event: globalThis.MouseEvent) => {
+    const handleMouseEnterEvent = useCallback(
+        (event: globalThis.MouseEvent) => {
+            if (!ref.current) return;
+            event.stopImmediatePropagation();
+            ref.current.style.background = '#3e3e3e75';
+        },
+        []
+    );
+
+    const handleMouseLeaveEvent = useCallback(() => {
         if (!ref.current) return;
-        event.stopImmediatePropagation();
-    };
+
+        ref.current.style.background = '';
+    }, []);
 
     useEffect(() => {
         if (!ref.current) return;
-        ref.current.addEventListener(
-            'mouseup',
-            handleMouseEnterEvent as any,
-            true
-        );
+        ref.current.addEventListener('mouseover', handleMouseEnterEvent);
+        ref.current.addEventListener('mouseleave', handleMouseLeaveEvent);
+
         return () => {
-            ref.current?.removeEventListener('mouseup', handleMouseEnterEvent);
+            ref.current?.removeEventListener(
+                'mouseover',
+                handleMouseEnterEvent
+            );
+
+            ref.current?.removeEventListener(
+                'mouseleave',
+                handleMouseLeaveEvent
+            );
         };
     }, []);
 
     const keys = useMemo(() => Object.keys(data), []);
 
     return (
-        <div ref={ref}>
+        <div style={{ padding: '3px', width: '100%' }} ref={ref} data-uid={uid}>
             {keys.map((key) => (
-                <div style={{ marginLeft: marginLeft + 20 }} key={key}>
+                <div
+                    style={{ marginLeft: marginLeft > 0 ? marginLeft : 0 }}
+                    key={key}>
                     {key} {'>'}
                     <ObjectView
                         nestedIndex={++nestedIndex}
-                        marginLeft={marginLeft + 20}>
+                        marginLeft={marginLeft + 30}>
                         {data[key]}
                     </ObjectView>
                 </div>
