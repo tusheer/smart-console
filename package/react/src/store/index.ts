@@ -2,7 +2,7 @@ import { useCallback, useSyncExternalStore } from 'react';
 
 type Store = typeof initialStore;
 type CallBackFunction<S> = (v: Store) => S;
-type SetStoreCallback = (value: Store) => Partial<Store>;
+type SetStoreCallback<StoreType> = (value: StoreType) => Partial<StoreType>;
 
 export type LogType = 'error' | 'log' | 'success' | 'info' | 'describe';
 
@@ -23,11 +23,11 @@ export const initialStore: InitailState = {
     selectedLog: null,
 };
 
-export const createStore = (initialStore: Store) => {
+export const createStore = <StoreType>(initialStore: StoreType) => {
     let state = initialStore;
     const getState = () => state;
     const listeners = new Set<Function>();
-    const setState = (fn: SetStoreCallback) => {
+    const setState = (fn: SetStoreCallback<StoreType>) => {
         state = {
             ...state,
             ...fn(state),

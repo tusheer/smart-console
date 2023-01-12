@@ -7,6 +7,8 @@ interface IObjectView {
     marginLeft?: number;
 }
 
+const virtualStore = createStore({});
+
 const ObjectView: React.FC<IObjectView> = ({
     children,
     nestedIndex = 0,
@@ -18,6 +20,13 @@ const ObjectView: React.FC<IObjectView> = ({
     if (!isObjectOrJsonType(data)) {
         return children;
     }
+
+    const virtualOBject = { ...data };
+
+    useEffect(() => {
+        virtualOBjectk;
+    }, []);
+
     const ref = useRef<HTMLDivElement>(null);
     const uid = useId();
 
@@ -57,10 +66,13 @@ const ObjectView: React.FC<IObjectView> = ({
     const keys = useMemo(() => Object.keys(data), []);
 
     return (
-        <div style={{ padding: '3px', width: '100%' }} ref={ref} data-uid={uid}>
+        <div style={{ width: '100%' }} ref={ref} data-uid={uid}>
             {keys.map((key) => (
                 <div
-                    style={{ marginLeft: marginLeft > 0 ? marginLeft : 0 }}
+                    style={{
+                        marginLeft: marginLeft > 0 ? marginLeft : 0,
+                        padding: '3px',
+                    }}
                     key={key}>
                     {key} {'>'}
                     <ObjectView

@@ -13,6 +13,7 @@ export default function Web() {
                                 nonested3: 1,
                             },
                         },
+                        hello: 'Hi ',
                     })
                 }>
                 objects
