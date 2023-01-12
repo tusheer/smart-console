@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useId, useCallback } from 'react';
 import { getDataType, isObjectOrJsonType } from '../utils';
+import { createStore } from '../store';
 
 interface IObjectView {
     children: any;
@@ -7,7 +8,7 @@ interface IObjectView {
     marginLeft?: number;
 }
 
-const virtualStore = createStore({});
+const virtualStore = createStore({ hi: 'sdf' });
 
 const ObjectView: React.FC<IObjectView> = ({
     children,
@@ -20,12 +21,6 @@ const ObjectView: React.FC<IObjectView> = ({
     if (!isObjectOrJsonType(data)) {
         return children;
     }
-
-    const virtualOBject = { ...data };
-
-    useEffect(() => {
-        virtualOBjectk;
-    }, []);
 
     const ref = useRef<HTMLDivElement>(null);
     const uid = useId();
