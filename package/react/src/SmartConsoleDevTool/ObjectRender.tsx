@@ -1,14 +1,18 @@
-import React, { useEffect, useMemo, useRef, useId, useCallback } from 'react';
+import React, {
+    useEffect,
+    useMemo,
+    useRef,
+    useId,
+    useCallback,
+    createContext,
+} from 'react';
 import { getDataType, isObjectOrJsonType } from '../utils';
-import { createStore } from '../store';
 
 interface IObjectView {
     children: any;
     nestedIndex?: number;
     marginLeft?: number;
 }
-
-const virtualStore = createStore({ hi: 'sdf' });
 
 const ObjectView: React.FC<IObjectView> = ({
     children,
@@ -81,4 +85,22 @@ const ObjectView: React.FC<IObjectView> = ({
     );
 };
 
-export default ObjectView;
+const ObjectRender: React.FC<
+    Omit<IObjectView, 'marginLeft' | 'nestedIndex'>
+> = ({ children }) => {
+    return (
+        <ObjectProvider>
+            <ObjectView>{children}</ObjectView>
+        </ObjectProvider>
+    );
+};
+
+const ObjectProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+    return (
+        <ObjectContext.Provider value={null}>{children}</ObjectContext.Provider>
+    );
+};
+
+const ObjectContext = createContext(null);
+
+export default ObjectRender;

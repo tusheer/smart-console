@@ -3,7 +3,7 @@ import { Log as LogType } from '../store';
 import { List, LogBody, LogStatus, LogTime } from './Styles';
 import { isObjectOrJsonType, timeFormat } from '../utils';
 import { motion } from 'framer-motion';
-import ObjectView from './ObjectView';
+import ObjectRender from './ObjectRender';
 interface ILogProps {
     log: LogType;
     onSelect: (log: LogType) => (event: React.MouseEvent) => void;
@@ -31,7 +31,7 @@ const Log: React.FC<ILogProps> = ({ log, onSelect, onRemove }) => {
             <LogStatus status={log.type}>{log.type}</LogStatus>
             <LogBody>
                 {isObjectOrJsonTypeLog ? (
-                    <ObjectView>{log.data}</ObjectView>
+                    <ObjectRender>{log.data}</ObjectRender>
                 ) : (
                     log.data
                 )}
