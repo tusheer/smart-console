@@ -23,6 +23,12 @@ export const initialStore: InitailState = {
     selectedLog: null,
 };
 
+export type CreateStoreType<StoreType> = (InitailState: StoreType) => {
+    getState: () => StoreType;
+    setState: (fn: SetStoreCallback<StoreType>) => void;
+    subscribe: (listener: Function) => () => boolean;
+};
+
 export const createStore = <StoreType>(initialStore: StoreType) => {
     let state = initialStore;
     const getState = () => state;

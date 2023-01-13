@@ -5,14 +5,31 @@ import React, {
     useId,
     useCallback,
     createContext,
+    useSyncExternalStore,
+    useContext,
 } from 'react';
 import { getDataType, isObjectOrJsonType } from '../utils';
+import { createStore, CreateStoreType } from '../store';
 
 interface IObjectView {
     children: any;
     nestedIndex?: number;
     marginLeft?: number;
 }
+
+type CallBackFunction<S> = (v: {
+    data: any;
+    hoverData: any;
+    selectedData: any;
+}) => S;
+
+type CreateStoreReturnType = ReturnType<CreateStoreType<VirtualStore>>;
+
+type VirtualStore = {
+    data: any;
+    hoverData: any;
+    selectedData: any;
+};
 
 const ObjectView: React.FC<IObjectView> = ({
     children,
@@ -89,18 +106,50 @@ const ObjectRender: React.FC<
     Omit<IObjectView, 'marginLeft' | 'nestedIndex'>
 > = ({ children }) => {
     return (
-        <ObjectProvider>
+        <ObjectProvider objectData={children}>
             <ObjectView>{children}</ObjectView>
         </ObjectProvider>
     );
 };
 
-const ObjectProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+const ObjectProvider: React.FC<
+    React.PropsWithChildren<{ objectData: any }>
+> = ({ children, objectData }) => {
+    const virtualObjectStore = useMemo(
+        () =>
+            createStore({
+                data: objectData,
+                hoverData: {},
+                selectedData: {},
+            }),
+        []
+    );
+
     return (
-        <ObjectContext.Provider value={null}>{children}</ObjectContext.Provider>
+        <ObjectContext.Provider value={virtualObjectStore}>
+            {children}
+        </ObjectContext.Provider>
     );
 };
 
-const ObjectContext = createContext(null);
+export const useStore = <V,>(callback: CallBackFunction<V>): V => {
+    const virtualStore = useContext(ObjectContext);
+
+    if (virtualStore === null) {
+        return {
+            data: {},
+            hoverData: {},
+            selectedData: {},
+        } as V;
+    }
+
+    return useSyncExternalStore(
+        virtualStore.subscribe,
+        useCallback(() => callback(virtualStore.getState()), []),
+        () => callback(virtualStore.getState())
+    ) as V;
+};
+
+const ObjectContext = createContext<CreateStoreReturnType | null>(null);
 
 export default ObjectRender;
