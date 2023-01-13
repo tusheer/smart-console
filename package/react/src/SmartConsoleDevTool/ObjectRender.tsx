@@ -15,13 +15,10 @@ interface IObjectView {
     children: any;
     nestedIndex?: number;
     marginLeft?: number;
+    objectPath?: string;
 }
 
-type CallBackFunction<S> = (v: {
-    data: any;
-    hoverData: any;
-    selectedData: any;
-}) => S;
+type CallBackFunction<S> = (v: VirtualStore) => S;
 
 type CreateStoreReturnType = ReturnType<CreateStoreType<VirtualStore>>;
 
@@ -35,9 +32,12 @@ const ObjectView: React.FC<IObjectView> = ({
     children,
     nestedIndex = 0,
     marginLeft = 0,
+    objectPath = '',
 }) => {
     const data =
         getDataType(children) === 'json' ? JSON.parse(children) : children;
+
+    const setVirtualStore = useSetVirtualObjectStore();
 
     if (!isObjectOrJsonType(data)) {
         return children;
@@ -49,16 +49,28 @@ const ObjectView: React.FC<IObjectView> = ({
     const handleMouseEnterEvent = useCallback(
         (event: globalThis.MouseEvent) => {
             if (!ref.current) return;
+
+            setVirtualStore((state) => {
+                return {
+                    ...state,
+                    hoverData: { [objectPath]: true },
+                };
+            });
+
             event.stopImmediatePropagation();
-            ref.current.style.background = '#3e3e3e75';
+            // ref.current.style.background = '#3e3e3e75';
         },
         []
     );
 
     const handleMouseLeaveEvent = useCallback(() => {
         if (!ref.current) return;
-
-        ref.current.style.background = '';
+        setVirtualStore((state) => {
+            return {
+                ...state,
+                hoverData: {},
+            };
+        });
     }, []);
 
     useEffect(() => {
@@ -81,8 +93,18 @@ const ObjectView: React.FC<IObjectView> = ({
 
     const keys = useMemo(() => Object.keys(data), []);
 
+    const hoverdObjectKey = useVirtualObjectStore(
+        (state) => state.hoverData[objectPath]
+    );
+
     return (
-        <div style={{ width: '100%' }} ref={ref} data-uid={uid}>
+        <div
+            style={{
+                width: '100%',
+                background: hoverdObjectKey ? '#3e3e3e75' : '',
+            }}
+            ref={ref}
+            data-uid={uid}>
             {keys.map((key) => (
                 <div
                     style={{
@@ -93,7 +115,8 @@ const ObjectView: React.FC<IObjectView> = ({
                     {key} {'>'}
                     <ObjectView
                         nestedIndex={++nestedIndex}
-                        marginLeft={marginLeft + 30}>
+                        marginLeft={marginLeft + 30}
+                        objectPath={objectPath + '.' + key}>
                         {data[key]}
                     </ObjectView>
                 </div>
@@ -103,7 +126,7 @@ const ObjectView: React.FC<IObjectView> = ({
 };
 
 const ObjectRender: React.FC<
-    Omit<IObjectView, 'marginLeft' | 'nestedIndex'>
+    Omit<IObjectView, 'marginLeft' | 'nestedIndex' | 'objectPath'>
 > = ({ children }) => {
     return (
         <ObjectProvider objectData={children}>
@@ -132,16 +155,8 @@ const ObjectProvider: React.FC<
     );
 };
 
-export const useStore = <V,>(callback: CallBackFunction<V>): V => {
+export const useVirtualObjectStore = <V,>(callback: CallBackFunction<V>): V => {
     const virtualStore = useContext(ObjectContext);
-
-    if (virtualStore === null) {
-        return {
-            data: {},
-            hoverData: {},
-            selectedData: {},
-        } as V;
-    }
 
     return useSyncExternalStore(
         virtualStore.subscribe,
@@ -150,6 +165,18 @@ export const useStore = <V,>(callback: CallBackFunction<V>): V => {
     ) as V;
 };
 
-const ObjectContext = createContext<CreateStoreReturnType | null>(null);
+const useSetVirtualObjectStore = () => {
+    const virtualStore = useContext(ObjectContext);
+
+    return virtualStore.setState;
+};
+
+const ObjectContext = createContext<CreateStoreReturnType>(
+    createStore({
+        data: {},
+        hoverData: {},
+        selectedData: {},
+    })
+);
 
 export default ObjectRender;
