@@ -7,8 +7,9 @@
     "files": [
         "dist"
     ],
-    "main": "./dist/index.mjs",
+    "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
+    "module": "./dist/index.mjs",
     "exports": {
         ".": {
             "import": "./dist/index.mjs",
