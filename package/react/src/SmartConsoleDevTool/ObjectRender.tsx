@@ -100,7 +100,6 @@ const ObjectView: React.FC<IObjectView> = ({
         <div
             style={{
                 width: '100%',
-                paddingLeft: '20px',
             }}
             ref={ref}
             data-uid={uid}>
@@ -129,7 +128,7 @@ const ObjectView: React.FC<IObjectView> = ({
             <div
                 style={{
                     background: hoverdObjectKey ? '#3e3e3e75' : '',
-                    padding: '12px',
+                    padding: '10px',
                 }}>
                 {keys.map((key) => (
                     <div
@@ -141,7 +140,7 @@ const ObjectView: React.FC<IObjectView> = ({
                         {key} {':'}
                         <ObjectView
                             nestedIndex={++nestedIndex}
-                            // marginLeft={marginLeft + 30}
+                            marginLeft={marginLeft + 10}
                             objectPath={objectPath + '.' + key}>
                             {data[key]}
                         </ObjectView>
@@ -177,7 +176,12 @@ const ObjectProvider: React.FC<
 
     return (
         <ObjectContext.Provider value={virtualObjectStore}>
-            <div style={{ position: 'relative', width: '100%' }}>
+            <div
+                style={{
+                    position: 'relative',
+                    width: '100%',
+                    paddingLeft: '20px',
+                }}>
                 {children}
             </div>
         </ObjectContext.Provider>
