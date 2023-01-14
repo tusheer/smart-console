@@ -58,7 +58,6 @@ const ObjectView: React.FC<IObjectView> = ({
             });
 
             event.stopImmediatePropagation();
-            // ref.current.style.background = '#3e3e3e75';
         },
         []
     );
@@ -101,26 +100,54 @@ const ObjectView: React.FC<IObjectView> = ({
         <div
             style={{
                 width: '100%',
-                background: hoverdObjectKey ? '#3e3e3e75' : '',
+                paddingLeft: '20px',
             }}
             ref={ref}
             data-uid={uid}>
-            {keys.map((key) => (
-                <div
-                    style={{
-                        marginLeft: marginLeft > 0 ? marginLeft : 0,
-                        padding: '3px',
-                    }}
-                    key={key}>
-                    {key} {'>'}
-                    <ObjectView
-                        nestedIndex={++nestedIndex}
-                        marginLeft={marginLeft + 30}
-                        objectPath={objectPath + '.' + key}>
-                        {data[key]}
-                    </ObjectView>
-                </div>
-            ))}
+            <div
+                style={{
+                    position: 'absolute',
+                    paddingTop: '14px',
+                    width: '20px',
+                    height: '20px',
+                    left: '0',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path
+                        fillRule="evenodd"
+                        d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                        clipRule="evenodd"
+                    />
+                </svg>
+            </div>
+            <div
+                style={{
+                    background: hoverdObjectKey ? '#3e3e3e75' : '',
+                    padding: '12px',
+                }}>
+                {keys.map((key) => (
+                    <div
+                        style={{
+                            marginLeft: marginLeft > 0 ? marginLeft : 0,
+                            padding: '3px 3px 3px 0px',
+                        }}
+                        key={key}>
+                        {key} {':'}
+                        <ObjectView
+                            nestedIndex={++nestedIndex}
+                            // marginLeft={marginLeft + 30}
+                            objectPath={objectPath + '.' + key}>
+                            {data[key]}
+                        </ObjectView>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
@@ -150,7 +177,9 @@ const ObjectProvider: React.FC<
 
     return (
         <ObjectContext.Provider value={virtualObjectStore}>
-            {children}
+            <div style={{ position: 'relative', width: '100%' }}>
+                {children}
+            </div>
         </ObjectContext.Provider>
     );
 };
